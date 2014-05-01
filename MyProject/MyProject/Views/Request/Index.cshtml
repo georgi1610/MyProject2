@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "View Requests";
+}
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+
+<li>@Html.ActionLink("New request", "Create", "Request")</li>
+<li>@Html.ActionLink("View my requests", "IndexMyReq", "Request")</li>
+<li>@Html.ActionLink("Manage requests - for Managers only", "IndexSup", "Request")</li>
+<li>@Html.ActionLink("Add travel info - for HR only", "IndexHR", "Request")</li>
+

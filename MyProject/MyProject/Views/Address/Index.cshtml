@@ -1,0 +1,59 @@
+﻿@model IEnumerable<MyProject.Models.Address>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StreetName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompanyName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StreetName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Number)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country.CountryName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AddressId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AddressId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AddressId })
+        </td>
+    </tr>
+}
+
+</table>
+
+@Html.ActionLink("Back", "../Home/Admin")
