@@ -15,22 +15,27 @@ namespace MyProject.Models
         [Key]
         public int AddressId { get; set; }
         [Required]
+        [Display(Name = "Company")]
+        [StringLength(50, MinimumLength = 3)]
         public string CompanyName { get; set; }
         [Required]
+        [Display(Name = "Street")]
+        [StringLength(50, MinimumLength = 3)]
         public string StreetName { get; set; }
         [Required]
+        [Display(Name = "Number")]
+        [Range(0, short.MaxValue)]
         public short Number { get; set; }
         [Required]
+        [Display(Name = "Postal Code")]
+        [StringLength(50, MinimumLength = 6)]
         public string PostalCode { get; set; }
+       
         [Required]
         public int CountryId { get; set; }
 
-        //public int RequestId { get; set; }
-        
+        [Required]
         public virtual Country Country { get; set; }
-
-        //public virtual ICollection<Request> Requests { get; set; }
-
-
+        
     }
 }

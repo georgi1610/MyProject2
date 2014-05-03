@@ -58,13 +58,7 @@ namespace MyProject.Controllers
         {
             if (ModelState.IsValid)
             {
-//                db.MyEmployee.Add(employee);
-//                db.SaveChanges();
-
                 ViewBag.Sup = new SelectList(db.MyEmployee, "EmployeeId", "FirstName");
-              //  ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
-            
-                //var role = ViewBag.Rol;
                 
                 using (var trans = db.Database.BeginTransaction())
                 {
@@ -91,20 +85,13 @@ namespace MyProject.Controllers
                         //Add User to Role 'Employee'
                         if (adminresult.Succeeded)
                         {
-                            
-                            //var result = UserManager.AddToRole(user.Id, "Employee");
-                            //ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
-                            //var r = db.Roles.Find(RoleId).Name;
-                
                             var result = UserManager.AddToRole(user.Id, "Employee");
-                            
                             db.SaveChanges();
                         }
                         trans.Commit();
                     }
                     catch (Exception e)
                     {
-
                         trans.Rollback();
                     }
                 }

@@ -161,6 +161,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AddressController.cs" />
+    <Compile Include="Controllers\AllowanceController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\DelegationController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -256,6 +257,70 @@
     <Compile Include="Migrations\201404291819462_1111.Designer.cs">
       <DependentUpon>201404291819462_1111.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405010806172_123.cs" />
+    <Compile Include="Migrations\201405010806172_123.Designer.cs">
+      <DependentUpon>201405010806172_123.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405010832280_1234.cs" />
+    <Compile Include="Migrations\201405010832280_1234.Designer.cs">
+      <DependentUpon>201405010832280_1234.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405010945501_12345.cs" />
+    <Compile Include="Migrations\201405010945501_12345.Designer.cs">
+      <DependentUpon>201405010945501_12345.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011008012_123456.cs" />
+    <Compile Include="Migrations\201405011008012_123456.Designer.cs">
+      <DependentUpon>201405011008012_123456.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011010191_1234567.cs" />
+    <Compile Include="Migrations\201405011010191_1234567.Designer.cs">
+      <DependentUpon>201405011010191_1234567.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011403436_12345678.cs" />
+    <Compile Include="Migrations\201405011403436_12345678.Designer.cs">
+      <DependentUpon>201405011403436_12345678.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011452389_222.cs" />
+    <Compile Include="Migrations\201405011452389_222.Designer.cs">
+      <DependentUpon>201405011452389_222.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011743528_2222.cs" />
+    <Compile Include="Migrations\201405011743528_2222.Designer.cs">
+      <DependentUpon>201405011743528_2222.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011752592_22222.cs" />
+    <Compile Include="Migrations\201405011752592_22222.Designer.cs">
+      <DependentUpon>201405011752592_22222.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011756452_222222.cs" />
+    <Compile Include="Migrations\201405011756452_222222.Designer.cs">
+      <DependentUpon>201405011756452_222222.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011807458_2222222.cs" />
+    <Compile Include="Migrations\201405011807458_2222222.Designer.cs">
+      <DependentUpon>201405011807458_2222222.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011810528_22222222.cs" />
+    <Compile Include="Migrations\201405011810528_22222222.Designer.cs">
+      <DependentUpon>201405011810528_22222222.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011820495_147.cs" />
+    <Compile Include="Migrations\201405011820495_147.Designer.cs">
+      <DependentUpon>201405011820495_147.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405011847504_1478.cs" />
+    <Compile Include="Migrations\201405011847504_1478.Designer.cs">
+      <DependentUpon>201405011847504_1478.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405030816466_14789.cs" />
+    <Compile Include="Migrations\201405030816466_14789.Designer.cs">
+      <DependentUpon>201405030816466_14789.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405031104532_147897.cs" />
+    <Compile Include="Migrations\201405031104532_147897.Designer.cs">
+      <DependentUpon>201405031104532_147897.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -269,6 +334,7 @@
     <Compile Include="Models\Transport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Validation\MyCustomValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -357,6 +423,11 @@
     <Content Include="Views\Request\EditSup.cshtml" />
     <Content Include="Views\Request\IndexHR.cshtml" />
     <Content Include="Views\Request\EditHR.cshtml" />
+    <Content Include="Views\Allowance\Create.cshtml" />
+    <Content Include="Views\Allowance\Delete.cshtml" />
+    <Content Include="Views\Allowance\Details.cshtml" />
+    <Content Include="Views\Allowance\Edit.cshtml" />
+    <Content Include="Views\Allowance\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -431,6 +502,54 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201404291819462_1111.resx">
       <DependentUpon>201404291819462_1111.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405010806172_123.resx">
+      <DependentUpon>201405010806172_123.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405010832280_1234.resx">
+      <DependentUpon>201405010832280_1234.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405010945501_12345.resx">
+      <DependentUpon>201405010945501_12345.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011008012_123456.resx">
+      <DependentUpon>201405011008012_123456.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011010191_1234567.resx">
+      <DependentUpon>201405011010191_1234567.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011403436_12345678.resx">
+      <DependentUpon>201405011403436_12345678.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011452389_222.resx">
+      <DependentUpon>201405011452389_222.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011743528_2222.resx">
+      <DependentUpon>201405011743528_2222.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011752592_22222.resx">
+      <DependentUpon>201405011752592_22222.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011756452_222222.resx">
+      <DependentUpon>201405011756452_222222.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011807458_2222222.resx">
+      <DependentUpon>201405011807458_2222222.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011810528_22222222.resx">
+      <DependentUpon>201405011810528_22222222.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011820495_147.resx">
+      <DependentUpon>201405011820495_147.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405011847504_1478.resx">
+      <DependentUpon>201405011847504_1478.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405030816466_14789.resx">
+      <DependentUpon>201405030816466_14789.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405031104532_147897.resx">
+      <DependentUpon>201405031104532_147897.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

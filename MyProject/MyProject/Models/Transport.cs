@@ -16,6 +16,7 @@ namespace MyProject.Models
 
         [Required]
         [Display(Name="Transport Company")]
+        [StringLength(50, MinimumLength = 3)]
         public string TransportCompany { get; set; }
     
         public virtual ICollection<Request> Requests { get; set; }

@@ -13,7 +13,10 @@ namespace MyProject.Models
         }
         [Key]
         public int CountryId { get; set; }
+        
         [Required]
+        [Display(Name="Country")]
+        [StringLength(50, MinimumLength = 3)]
         public string CountryName { get; set; }
 
         public virtual ICollection<Address> Addresses { get; set; }

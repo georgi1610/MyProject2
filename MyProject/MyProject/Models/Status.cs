@@ -14,6 +14,8 @@ namespace MyProject.Models
         [Key]
         public int StatusId { get; set; }
         [Required]
+        [Display(Name = "Status Name")]
+        [StringLength(50, MinimumLength = 3)]
         public string StatusName { get; set; }
 
         public virtual ICollection<Request> Requests { get; set; }

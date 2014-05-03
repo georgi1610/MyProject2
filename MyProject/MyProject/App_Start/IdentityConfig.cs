@@ -12,6 +12,11 @@ namespace MyProject.App_Start
 //    public class MyDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     public class MyDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
     {
+       /* protected void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Employee>().HasRequired(d => d.FirstName).WithMany().WillCascadeOnDelete(true);
+        }*/
+
         protected override void Seed(ApplicationDbContext context)
         {
             InitializeIdentityForEF(context);

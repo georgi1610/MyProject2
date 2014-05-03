@@ -30,6 +30,17 @@ namespace MyProject.Models
         public string LastName { get; set; }
 
         [Required]
+        [Display(Name = "Full Name")]
+        [StringLength(150, MinimumLength = 9)]
+        public string FullName
+        {
+            get
+            {
+                return FirstName + " " + MiddleName + " " + LastName;
+            }
+        }
+
+        [Required]
         [Display(Name = "EMail")]
         [StringLength(100, MinimumLength = 3)]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
@@ -60,11 +71,9 @@ namespace MyProject.Models
         [Display(Name = "Department")]
         public string Department { get; set; }
 
+        [Display(Name = "Superior")]
         public virtual Employee SuperiorEmployee { get; set; }
-        //public virtual ICollection<Request> Requests { get; set; }
-    
-        //[Required]
-        //public virtual ApplicationUser AppUser { get; set; }
+     
     }
 
 }

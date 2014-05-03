@@ -12,8 +12,11 @@ namespace MyProject.Models
         {
         }
         [Key]
+        [Display(Name = "Delegation")]
         public int DelegationId { get; set; }
         [Required]
+        [Display(Name = "Delegation Type")]
+        [StringLength(50, MinimumLength = 3)]
         public string DelegationType { get; set; }
 
         public virtual ICollection<Request> Requests { get; set; }
