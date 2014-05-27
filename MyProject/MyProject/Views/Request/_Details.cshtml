@@ -1,0 +1,54 @@
+﻿@model MyProject.Models.Request
+
+@{
+    ViewBag.Title = "_Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Request @Html.DisplayFor(model => model.RequestId)</h4>
+	<hr />
+    @{
+        Layout = null;
+    }
+    @using (@Html.BeginForm())
+    {
+        <fieldset>
+           <table>
+               <tr>
+                   <td><b>@Html.DisplayNameFor(model => model.Applicant.FullName)</b></td>
+                   <td>@Html.DisplayFor(model => model.Applicant.FullName)</td>
+               </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.Delegation.DelegationType)</b></td>
+                    <td>@Html.DisplayFor(model => model.Delegation.DelegationType)</td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.DepartureDate)</b></td>
+                    <td>@Html.DisplayFor(model => model.DepartureDate)</td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.ReturnDate)</b></td>
+                    <td>@Html.DisplayFor(model => model.ReturnDate)</td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.Description)</b></td>
+                    <td>@Html.DisplayFor(model => model.Description)</td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.Status.StatusName)</b></td>
+                    <td>@Html.DisplayFor(model => model.Status.StatusName)</td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.Motivation)</b></td>
+                    <td>@Html.DisplayFor(model => model.Motivation)</td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.Approver)</b></td>
+                    <td>@Html.DisplayFor(model => model.Approver.FullName)</td>
+                </tr>
+            </table>
+        </fieldset>
+    }
+</div>

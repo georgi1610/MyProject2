@@ -14,18 +14,22 @@ namespace MyProject.Models
 
         [Key]
         public int AddressId { get; set; }
+
         [Required]
         [Display(Name = "Company")]
         [StringLength(50, MinimumLength = 3)]
         public string CompanyName { get; set; }
+        
         [Required]
         [Display(Name = "Street")]
         [StringLength(50, MinimumLength = 3)]
         public string StreetName { get; set; }
+        
         [Required]
         [Display(Name = "Number")]
         [Range(0, short.MaxValue)]
         public short Number { get; set; }
+        
         [Required]
         [Display(Name = "Postal Code")]
         [StringLength(50, MinimumLength = 6)]
@@ -34,8 +38,15 @@ namespace MyProject.Models
         [Required]
         public int CountryId { get; set; }
 
-        [Required]
+       // [Required]
         public virtual Country Country { get; set; }
-        
+
+        //[Required]
+     //   public virtual Transport DepartureTransport { get; set; }
+
+ //       [Required]
+       // public virtual Transport ArrivalTransport { get; set; }
+
+       
     }
 }

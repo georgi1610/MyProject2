@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyProject.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -44,6 +45,8 @@ namespace MyProject.Models
         [Display(Name = "EMail")]
         [StringLength(100, MinimumLength = 3)]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
+        [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})\s*"
+            , ErrorMessage = "The email address is invalid.")]
         public string EMail { get; set; }
 
         [Required]
@@ -59,7 +62,18 @@ namespace MyProject.Models
         [Required]
         [DataType(DataType.Date)]
         [Display(Name="Hire Date")]
-        public System.DateTime HireDate { get; set; }
+        [MyHireDateValidator()]
+        public DateTime HireDate { get; set; }
+
+        
+        [DataType(DataType.Date)]
+        [Display(Name = "End Date")]
+        public DateTime EndDate { get; set; }
+
+        [Required]
+        [StringLength(50, MinimumLength = 3)]
+        [Display(Name = "Headquarter")]
+        public string Headquarter { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 3)] 

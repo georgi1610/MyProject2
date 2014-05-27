@@ -1,0 +1,103 @@
+﻿@model MyProject.Models.Transport
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+
+@using ( Html.BeginForm ("Create", "Transport", FormMethod.Post , new { enctype = "multipart/form-data" }) )
+{ 
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Transport</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartureDateTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DepartureDateTime, "{0:dd/MM/yyyy}")
+                @Html.ValidationMessageFor(model => model.DepartureDateTime)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartureTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DepartureTime)
+                @Html.ValidationMessageFor(model => model.DepartureTime)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArrivalDateTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ArrivalDateTime)
+                @Html.ValidationMessageFor(model => model.ArrivalDateTime)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArrivalTime, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ArrivalTime)
+                @Html.ValidationMessageFor(model => model.ArrivalTime)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DepartureAddress, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DepartureAddress)
+                @Html.ValidationMessageFor(model => model.DepartureAddress)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ArrivalAddress, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ArrivalAddress)
+                @Html.ValidationMessageFor(model => model.ArrivalAddress)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DriverId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("DriverId", String.Empty)
+                @Html.ValidationMessageFor(model => model.DriverId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TransportCompId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("TransportCompId", String.Empty)
+                @Html.ValidationMessageFor(model => model.TransportCompId)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PlaneTicketPath, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type ="file" id ="PlaneTicketPath" name ="PlaneTicketPath" />
+            </div>
+        </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+}
+
+<div>
+    @Html.ActionLink("Back to Request", "../Request/EditHR/")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

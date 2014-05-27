@@ -6,38 +6,67 @@ using System.Web;
 
 namespace MyProject.Validation
 {
-    public class MyDepartureDateValidator : ValidationAttribute
+    public class MyHireDateValidator : ValidationAttribute
     {
-        /*
-        public static ValidationResult ValidateDate(DateTime date1)//, DateTime date2)
-        {
-            if (date1.Date < DateTime.Today)
-            {
-                return new ValidationResult("Departure Date cannot be in the past.");
-            }
-             if (date2.Date < date1.Date)
-             {
-                 return new ValidationResult("Return Date cannot be before Departure Date.");
-             }
-
-             if (date1.Date.AddDays(30) < date2.Date)
-             {
-                 return new ValidationResult("Delegation Duration is maximum 30 days.");
-             }
-             
-            return ValidationResult.Success;
-        }
-        */
-      
-
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value != null)
             {
-                var depdate = (DateTime)value;
-                if (depdate < DateTime.Now)
+                var hiredate = (DateTime)value;
+                if (hiredate > DateTime.Now.AddHours(1))
                 {
-                    var errormessage = "Departure Date must be in the future";
+                    var errormessage = "Hire Date can't be in the future.";
+                    return new ValidationResult(errormessage);
+                }
+            }
+            return ValidationResult.Success;
+        }
+    }
+
+    public class MyDepartureDateValidator : ValidationAttribute
+    {
+        private string propertyToCompare;
+        public MyDepartureDateValidator(string compareWith = "")
+        {
+            propertyToCompare = compareWith;
+        }
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var basePropertyInfo = validationContext.ObjectType.GetProperty(propertyToCompare);
+            var subDate = (DateTime)basePropertyInfo.GetValue(validationContext.ObjectInstance, null);
+            
+            if (value != null)
+            {
+                var depdate = (DateTime)value;
+                if (depdate < subDate)
+                {
+                    var errormessage = "Departure Date must be in the future, after current date.";
+                    return new ValidationResult(errormessage);
+                }
+            }
+            return ValidationResult.Success;
+        }
+    }
+
+    public class MyReturnDateValidator : ValidationAttribute
+    {
+        private string propertyToCompare;
+        
+        public MyReturnDateValidator(string compareWith = "")
+        {
+            propertyToCompare = compareWith;
+        }
+        
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var basePropertyInfo = validationContext.ObjectType.GetProperty(propertyToCompare);
+            var depDate = (DateTime)basePropertyInfo.GetValue(validationContext.ObjectInstance, null);
+            if (value != null)
+            {
+                var retDate = (DateTime)value;
+                if (retDate < depDate)
+                {
+                    var errormessage = "Return Date must be after Departure Date.";
                     return new ValidationResult(errormessage);
                 }
             }

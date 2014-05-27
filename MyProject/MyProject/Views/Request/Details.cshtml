@@ -8,6 +8,26 @@
 
 <div>
     <h4>Request</h4>
+    @{  var image = Model.Status.StatusName;
+    }
+    <div style="padding:10px;">
+        @if (image == "New")
+        {
+            <img src="@Url.Content("~/images/status_new.jpg")" width="908" height="124" alt="new request" />
+        }
+        @if (image == "Approved")
+        {
+            <img src="@Url.Content("~/images/status_approved.jpg")" width="908" height="124" alt="approved request" />
+        }
+        @if (image == "Denied")
+        {
+            <img src="@Url.Content("~/images/status_denied.jpg")" width="908" height="124" alt="denied request" />
+        }
+        @if (image == "Closed")
+        {
+            <img src="@Url.Content("~/images/status_closed.jpg")" width="908" height="124" alt="closed request" />
+        }
+    </div>
 	<hr />
     <dl class="dl-horizontal">
         <dt>
@@ -16,14 +36,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Delegation.DelegationType)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status.StatusName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status.StatusName)
         </dd>
 
         <dt>
@@ -58,29 +70,33 @@
             @Html.DisplayFor(model => model.Description)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Status.StatusName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status.StatusName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Motivation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Motivation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Approver)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Approver.FullName)
+        </dd>
+
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.RequestId }) |
     @Html.ActionLink("Back to List", "IndexMyReq")
 </p>
-@{  var image = Model.Status.StatusName;
-}
-<div style="padding:10px;">
-    @if (image == "New")
-    {
-        <img src="@Url.Content("~/images/status_new.jpg")" width="908" height="124" alt="new request" />
-    }
-    @if (image == "Approved")
-    {
-        <img src="@Url.Content("~/images/status_approved.jpg")" width="908" height="124" alt="approved request" />
-    }
-    @if (image == "Denied")
-    {
-        <img src="@Url.Content("~/images/status_denied.jpg")" width="908" height="124" alt="denied request" />
-    }
-    @if (image == "Closed")
-    {
-        <img src="@Url.Content("~/images/status_closed.jpg")" width="908" height="124" alt="closed request" />
-    }
-</div>

@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MyProject.Models.Transport>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArrivalDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ArrivalTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Driver)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TransportComp)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartureDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DepartureTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArrivalDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ArrivalTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Driver.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TransportComp.CompanyName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TransportId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TransportId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TransportId })
+        </td>
+    </tr>
+}
+
+</table>

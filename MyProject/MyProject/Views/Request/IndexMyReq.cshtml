@@ -11,7 +11,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Applicant.FirstName)
+            @Html.DisplayNameFor(model => model.Applicant.FullName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Delegation.DelegationType)
@@ -41,7 +41,7 @@
     
     <tr>
         <td>
-            @Html.DisplayFor(model => item.Applicant.FirstName)
+            @Html.DisplayFor(model => item.Applicant.FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Delegation.DelegationType)
@@ -64,14 +64,32 @@
         <td>
             @Html.DisplayFor(modelItem => item.Motivation)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "EditEmp", new { id=item.RequestId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RequestId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RequestId })
-        </td>
-    </tr>
+        @{  var status = item.Status.StatusName;
+        }
+        
+            @if (status == "New")
+            {
+            <td>
+                @Html.ActionLink("Edit", "EditEmp", new { id = item.RequestId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RequestId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RequestId })
+            </td>
+            }
+            @if (status != "New")
+{
+    <td>
+        @Html.ActionLink("Details", "Details", new { id = item.RequestId })
+    </td>
+}
+           
+</tr>
 }
 
 </table>
+
+<div>
+    @Html.ActionLink("Back", "../Request") |
+    @Html.ActionLink("New request", "../Request/Create")
+</div>
 
 

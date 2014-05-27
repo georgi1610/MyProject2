@@ -1,0 +1,83 @@
+﻿@model MyProject.Models.Transport
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Transport</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArrivalDateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArrivalDateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArrivalTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArrivalTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartureAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartureAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ArrivalAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ArrivalAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Driver)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Driver.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TransportComp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TransportComp.CompanyName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TransportId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

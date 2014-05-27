@@ -9,23 +9,24 @@ namespace MyProject.Models
 {
     public class Request
     {
-
+        [Key]
         public int RequestId { get; set; }
 
         [DataType(DataType.Date)]
         [Display(Name="Submit Date")]
-        public System.DateTime SubmitDate { get; set; }
+        public DateTime SubmitDate { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Departure Date")]
-        [MyDepartureDateValidator()]
-        public System.DateTime DepartureDate { get; set; }
+        [MyDepartureDateValidator(compareWith: "SubmitDate")]
+        public DateTime DepartureDate { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Return Date")]
-        public System.DateTime ReturnDate { get; set; }
+        [MyReturnDateValidator(compareWith: "DepartureDate")]
+        public DateTime ReturnDate { get; set; }
 
         [Required]
         [Display(Name = "Status")]
@@ -36,13 +37,12 @@ namespace MyProject.Models
 
         //[Required]
         [Display(Name = "Description")]
-        // [MyCustomValidator("/.,!@#$%", ErrorMessage = "not ok")]
         public string Description { get; set; }
 
         [Required]
         [Display(Name = "Delegation Type")]
         public int DelegationId { get; set; }
-
+        
         [Required]
         [Display(Name = "Departure Address req")]
         public int DepartureAddressId { get; set; }
@@ -50,7 +50,7 @@ namespace MyProject.Models
         [Required]
         [Display(Name = "Return Address req")]
         public int ReturnAddressId { get; set; }
-
+        
         [Display(Name = "Transport")]
         public int? TransportId { get; set; }
 
@@ -71,11 +71,5 @@ namespace MyProject.Models
         public virtual Employee HREmployee { get; set; }
         public virtual Employee StandIn { get; set; }
 
-
-        //[Display(Name= "Applicant")]
-        //public int ApplicantId { get; set; }
-
-        //[Display(Name = "Approver")]
-        //public int ApproverId { get; set; }
     }
 }

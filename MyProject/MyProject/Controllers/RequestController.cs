@@ -73,7 +73,8 @@ namespace MyProject.Controllers
                       where u.UserName.Equals(loggedUser.Name)
                       select u.EmployeeId).First();//iau id-ul angajatului logat cu nume user = loggedUser.Name
             var req = (from r in db.MyRequest//iau doar cererile aprobate, la care user-ul HR logat este setat
-                       where r.HREmployee.EmployeeId == id && r.HREmployee.Department.Equals("Human Resources") && r.Status.StatusName.Equals("Approved")
+                       where r.HREmployee.EmployeeId == id && r.HREmployee.Department.Equals("Human Resources") 
+                             && (r.Status.StatusName.Equals("Approved") || r.Status.StatusName.Equals("Denied"))
                        select r).ToList();
             return View(req.ToList());
         }
@@ -90,6 +91,23 @@ namespace MyProject.Controllers
             {
                 return HttpNotFound();
             }
+            if (Request.IsAjaxRequest())
+            {
+                Request myReq = new Request();
+
+                myReq.DepartureAddress = request.DepartureAddress;
+                myReq.ReturnAddress = request.ReturnAddress;
+                myReq.DepartureDate = request.DepartureDate;
+                myReq.ReturnDate = request.ReturnDate;
+                myReq.Status.StatusName = request.Status.StatusName;
+                myReq.Applicant = request.Applicant;
+                myReq.Approver = request.Approver;
+                myReq.StandIn = request.StandIn;
+                myReq.HREmployee = request.HREmployee;
+
+                return PartialView("_Details", myReq);
+            }
+            else
             return View(request);
         }
 
@@ -101,8 +119,7 @@ namespace MyProject.Controllers
             ViewBag.DepartureAddressId = new SelectList(db.MyAddress, "AddressId", "CompanyName");
             ViewBag.ReturnAddressId = new SelectList(db.MyAddress, "AddressId", "CompanyName");
             ViewBag.StandInId = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
-          
-            
+
             return View();
         }
 
@@ -296,8 +313,9 @@ namespace MyProject.Controllers
         */
 
         // GET: /Request/EditHR/5
-        public ActionResult EditHR(int? id)
+        public ActionResult EditHR(int? id)//, string returnUrl)
         {
+           // ViewBag.ReturnUrl = returnUrl;//geo-returnurl??
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -307,6 +325,7 @@ namespace MyProject.Controllers
             {
                 return HttpNotFound();
             }
+            TempData.Clear();
             TempData.Add("subDate", request.SubmitDate);
             TempData.Add("depDate", request.DepartureDate);
             TempData.Add("retDate", request.ReturnDate);
@@ -316,10 +335,10 @@ namespace MyProject.Controllers
             TempData.Add("HR", request.HREmployee);
             TempData.Add("status", request.StatusId);
 
-            ViewBag.DelegationId = new SelectList(db.MyDelegation, "DelegationId", "DelegationType", request.DelegationId);
-            ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName", request.StatusId);
+            ViewBag.DelegationId = new SelectList(db.MyDelegation, "DelegationId", "DelegationType");//, request.DelegationId);
+            ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName");//, request.StatusId);
 
-            ViewBag.TransportId = new SelectList(db.MyTransport, "TransportId", "TransportCompany");
+            ViewBag.TransportId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
             ViewBag.AllowanceId = new SelectList(db.Allowances, "AllowanceId", "Amount");
 
             return View(request);
@@ -329,22 +348,16 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditHR([Bind(Include = "RequestId,SubmitDate,DepartureDate,ReturnDate,StatusId,Description,DelegationId,TransportId,AllowanceId")] Request request)
+        public ActionResult EditHR([Bind(Include = "RequestId,StatusId,TransportCompanyId,AllowanceId")] Request request)
         {
-
+            EmployeeDAL ed = new EmployeeDAL();
+          
             if (ModelState.IsValid)
             {
                 using (var trans = db.Database.BeginTransaction())
                 {
                     try
                     {
-                        EmployeeDAL ed = new EmployeeDAL();
-
-                        ViewBag.TransportId = new SelectList(db.MyTransport, "TransportId", "TransportCompany");
-                        ViewBag.AllowanceId = new SelectList(db.Allowances, "AllowanceId", "Amount");
-                        ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName");
-
-
                         db.Entry(request).State = EntityState.Modified;
                         object o;
                         bool b;
@@ -356,9 +369,8 @@ namespace MyProject.Controllers
                         request.ReturnDate = (System.DateTime)o;
                         b = TempData.TryGetValue("delID", out o);
                         request.DelegationId = (Int32)o;
-                        //b = TempData.TryGetValue("status", out o);
-                        //request.StatusId = (Int32)o;
 
+                        //request.Transport?????
 
                         db.SaveChanges();
 
@@ -368,13 +380,13 @@ namespace MyProject.Controllers
                         request.Approver = (Employee)o;
                         b = TempData.TryGetValue("HR", out o);
                         request.HREmployee = (Employee)o;
-
+                        
                         string s = ed.getStatusNameById(request.StatusId);
 
                         //send email to applicant
                         string subject = "";
                         string body = "";
-                        if (s.Equals("Approved"))
+                        if (s.Equals("Closed"))
                         {
                             subject = "delegation request updated";
                             body = "transport details have been added, view here your request status http://localhost:5281/Request/IndexMyReq";
@@ -382,10 +394,10 @@ namespace MyProject.Controllers
                         }
 
                         //send email to approver
-                        if (s.Equals("Approved"))
+                        if (s.Equals("Closed"))
                         {
                             subject = "delegation request updated";
-                            body = "transport details have been added for employee";
+                            body = "transport details have been added for employee" + request.Applicant.FullName;
                             ed.sendEmail(request.Approver, request.HREmployee, subject, body);
                         }
                         TempData.Clear();
@@ -401,7 +413,7 @@ namespace MyProject.Controllers
             }
             ViewBag.DelegationId = new SelectList(db.MyDelegation, "DelegationId", "DelegationType", request.DelegationId);
             ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName");
-            ViewBag.TransportId = new SelectList(db.MyTransport, "TransportId", "TransportCompany");
+            ViewBag.TransportId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
             ViewBag.AllowanceId = new SelectList(db.Allowances, "AllowanceId", "Amount");
 
 
@@ -420,6 +432,7 @@ namespace MyProject.Controllers
             {
                 return HttpNotFound();
             }
+            TempData.Clear();
             TempData.Add("subDate", request.SubmitDate);
             TempData.Add("depDate", request.DepartureDate);
             TempData.Add("retDate", request.ReturnDate);
@@ -445,14 +458,14 @@ namespace MyProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditSup([Bind(Include="RequestId,DepartureDate,ReturnDate,StatusId,Motivation,Description")] Request request)
         {
-           
+            EmployeeDAL ed = new EmployeeDAL();
+      
             if (ModelState.IsValid)
             {
                 using (var trans = db.Database.BeginTransaction())
                 {
                     try
                     {
-                        EmployeeDAL ed = new EmployeeDAL();
                         
                         db.Entry(request).State = EntityState.Modified;
                         object o;

@@ -31,6 +31,8 @@ namespace MyProject.Models
 
         public DbSet<Allowance> Allowances { get; set; }
 
+        public DbSet<TransportCompany> TransportCompanies { get; set; }
+
 
     }
 }
