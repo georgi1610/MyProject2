@@ -65,21 +65,21 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DriverId, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Driver.FullName, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("DriverId", String.Empty)
-                @Html.ValidationMessageFor(model => model.DriverId)
+                @Html.EditorFor(model => model.Driver.FullName)
+                @Html.ValidationMessageFor(model => model.Driver.FullName)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.TransportCompId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("TransportCompId", String.Empty)
+                @Html.DropDownList("TransCompId", String.Empty)
                 @Html.ValidationMessageFor(model => model.TransportCompId)
             </div>
         </div>
-
+      
         <div class="form-group">
             @Html.LabelFor(model => model.PlaneTicketPath, new { @class = "control-label col-md-2" })
             <div class="col-md-10">

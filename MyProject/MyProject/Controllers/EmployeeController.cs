@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using MyProject.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using MyProject.DAL;
 
 namespace MyProject.Controllers
 {
@@ -54,7 +55,7 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="EmployeeId,FirstName,MiddleName,LastName,EMail,PersonalID,HireDate,Position,Department")] Employee employee, int? Sup, int? RoleId)
+        public ActionResult Create([Bind(Include="EmployeeId,FirstName,MiddleName,LastName,EMail,EMailPassword,PersonalID,HireDate,Headquarter,Position,Department")] Employee employee, int? Sup, int? RoleId)
         {
             if (ModelState.IsValid)
             {
@@ -70,8 +71,10 @@ namespace MyProject.Controllers
                             Employee sup = db.MyEmployee.Find(Sup);
                             employee.SuperiorEmployee = sup;
                         }
-                        db.MyEmployee.Add(employee);
-                        db.SaveChanges();
+                        //db.MyEmployee.Add(employee);
+                        //db.SaveChanges();
+                        EmployeeDAL ed = new EmployeeDAL();
+                        ed.addEmployeeAndSaveChanges(employee);
 
                         //create user for employee
                         var user = new ApplicationUser();
@@ -79,14 +82,15 @@ namespace MyProject.Controllers
                         user.MyEmployee = employee;
                         var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                         var adminresult = UserManager.Create(user, "password");
-                        db.SaveChanges();
-                                               
+                        //db.SaveChanges();
+                        ed.saveChanges();                       
                        
                         //Add User to Role 'Employee'
                         if (adminresult.Succeeded)
                         {
                             var result = UserManager.AddToRole(user.Id, "Employee");
-                            db.SaveChanges();
+                            //db.SaveChanges();
+                            ed.saveChanges();
                         }
                         trans.Commit();
                     }

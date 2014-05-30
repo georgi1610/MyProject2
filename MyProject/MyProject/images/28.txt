@@ -1,0 +1,28 @@
+1. Se cere un fisier de comenzi care primeste in linia de comanda un nume de fisier f si un numar n. Se cere crearea fisierului f prin concatenarea fisierelor f.1, f.2, ..., f.n. Daca unul din aceste fisere nu exista el va trebui creat si va trebui sa contina textul "Eroare: acest fisier nu a existat inainte de executia comenzii".
+
+2. Pentru fiecare fisier ASCII dintr-un director dat ca parametru si din toate subdirectoarele lui, se vor afisa primele n linii (n dat ca parametru).
+
+3. Sa se creeze doua fisiere, unul care va contine lista tuturor fisierelor dintr-un director si din subdirectoarele acestuia, iar al doilea lista tuturor subdirectoarelor. Fisierele vor fi ordonate dupa dimensiune, iar directoarele alfabetic.
+
+4. Un fisier de comenzi care ordoneaza dupa numarul de cuvinte continute, fisierele date ca parametri
+
+5. Un fisier de comenzi care pentru fiecare user dat ca parametru creeaza cate un un fisier cu numele userului respectiv care va contine (printre altele) numele complet al utilizatorului
+
+6. Fie cateva fisiere care contin nume de utilizatori. Se cere un fisier de comenzi care pentru fiecare nume de fisier (ce contine useri) primit ca parametru trimite cate un mail userilor din fisierul respectiv
+
+7.Un fisiere de comenzi care afiseaza numarul de fisiere din fiecare director dat ca parametru si afiseaza spatiul ocupat pe disc de directoarele respective.
+
+8.Un fisier de comenzi care pentru un tip de fisier dat ca si parametru (ex *.c sau a* sau *~) sterge fisierele respective dintr-un director dat ca parametru si afiseaza dimensiunea directorului inainte si dupa stergere.
+
+9.Un fisier de comenzi care din 10 in 10 secunde (folosind un ciclu while) afiseaza incarcarea sistemului (comanda uptime) si spatiul ocupat pe disc.
+
+10.Un fisier de comenzi care din 10 in 10 secunde afiseaza pe ecran utilizatorii din retea (in ordine alfabetica) si statiile de la care sunt conectati acestia.
+
+11.Se da un fisier (sau mai multe) cu utilizatori. Sa se scrie un fisier de comenzi care din 20 in 20 de secunde trimite un mesaj (aflat intr-un fisier primit ca parametru) utilizatorilor din fisierul (sau fisierele) respective.
+
+12. Se da un fisier cu utilizatori. Sa se scrie un fisier de comenzi care, luand pe rand utilizatorii din fisier, la interval de 30 secunde le trimite cate un mail.(continutul mailului se afla intr-un fisier transmis ca parametru).
+
+13. Sa se scrie un fisier de comenzi care are ca parametri perechi formate dintr-un nume de fisier si un numar k. Pentru fiecare pereche, se vor afisa numele fisierului numarul k si apoi primele k linii din fisier. 
+
+Timp de lucru: doua saptamani
+Forma de prezentare: fisierele de comenzi cerute, grupate intr-o arhiva sau intr-un director.

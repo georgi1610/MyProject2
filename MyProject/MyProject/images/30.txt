@@ -1,0 +1,48 @@
+Problemele de mai jos se vor rezolva prin script-uri shell ce vor apela utilitarul awk
+
+1. Sa se afiseze ora curenta sub forma
+
+    ora xx, xx minute, xx secunde
+
+2. Sa se afiseze procesele ce au consumat mai mult de 10s de unitate centrala.
+
+3. Sa se listeze cele mai mari 10 fisiere dintr-un director dat ca parametru si din subdirectoarele sale, in ordine descrescatoare a lungimii
+
+4. Se da, in fisierul studenti.lst lista studentilor in formatul:
+
+      Nume Prenume nume-utilizator grupa
+
+(coloanele sunt separate prin blancuri; numele compuse sunt separate prin '-'; exemplu: Popescu Ana-Maria pa12345 221 . Dandu-se o lista de grupe, sa se trimita fiecarui student cate un mesaj (mesajul se da intr-un fisier al carui nume este de asemenea dat ca parametru).
+
+5. Pornind de la un director, sa se afiseze toate fisierele, din el si din subdirectoarele sale, care au proprietar diferit de proprietarul directorului in care se gasesc.
+
+6. Sa se afiseze liniile din fisiere care contin un acelasi cuvint aflat in pozitii consecutive. Pentru liniile respec- tive sa se afiseze si numarul liniei (in cadrul fisierului din care face parte).
+
+7. Se da un fisier cu utilizatori in formatul urmator: Nume Prenume nume-utilizator zi luna an unde zi, luna si an reprezinta data nasterii acelei persoane Se cere sa se trimita fiecarui utilizato care isi aniverseaza data nasterii in ziua curenta un mesaj de forma
+
+	La multi ani, Prenume Nume !
+
+8. Se da un fisier cu datele privind un examen, in formatul urmator
+
+    Nume Prenume nume-utilizator nota1 nota2 ... nota_n
+
+(numarul de note este acelasi pentru toti studentii) Se cere construirea unui fisier in format Nume Prenume nume-utilizator media media fiind media aritmetica a notelor
+
+9. Pentru fisierul de iesire de la problema 8, sa se trimita fiecarui student un mesaj de forma:
+
+     Catre Prenume Nume,
+     Va informam ca la examenul de sisteme de operare ati obtinut nota
+	media.
+
+unde bineinteles Prenume, Nume si media se vor inlocui cu valorile adecvate.
+
+10. Sa se afiseze numarul maxim de linii consecutive care coincid dintr-un acelasi fisier si continutul liniei respective precum si numele fisierului care o contine.
+
+11. Pentru toate fisierele cu sufixul .c, .cc sau .h dintr-un director si din subdirectoarele sale sa se calculeze si sa se afiseze numarul mediu de cuvinte pe linie, apoi sa se calculeze numarul mediu pentru toate fisierele (media generala).
+
+12. Sa se inlocuiasca intr-un numar oarecare de fisiere orice apari- tie a unui anumit cuvint cu un alt cuvint; cuvintele respective vor fi date in linia de comanda awk ca si parametri).
+
+13. Sa se determina dimensiunea medie a "cutiei postale" a utilizatorilor. (indicatie: "cutiile postale" sunt fisierele din /var/spool/mail) 
+
+Timp de lucru: o saptamana pentru primele 7 exercitii (nota maxima) sau doua saptamani pentru toate exercitiile
+Forma de prezentare: fisierele de comenzi cerute, grupate intr-o arhiva sau intr-un director.

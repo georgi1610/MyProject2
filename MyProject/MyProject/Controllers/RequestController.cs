@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using MyProject.Models;
 using System.Net.Mail;
 using MyProject.DAL;
+using System.Data.Entity.Core;
+using System.Data.Entity.Core.Objects;
 
 namespace MyProject.Controllers
 {
@@ -338,8 +340,13 @@ namespace MyProject.Controllers
             ViewBag.DelegationId = new SelectList(db.MyDelegation, "DelegationId", "DelegationType");//, request.DelegationId);
             ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName");//, request.StatusId);
 
-            ViewBag.TransportId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
+            //ViewBag.TransCompId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
+            //ViewBag.DrvId = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
+            ViewBag.driver = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
+            ViewBag.transcomp = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
             ViewBag.AllowanceId = new SelectList(db.Allowances, "AllowanceId", "Amount");
+            
+            ViewBag.Transports = db.MyTransport.ToList();
 
             return View(request);
         }
@@ -348,10 +355,12 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditHR([Bind(Include = "RequestId,StatusId,TransportCompanyId,AllowanceId")] Request request)
+        public ActionResult EditHR([Bind(Include = "RequestId,StatusId,TransportCompId,AllowanceId")] Request request)
         {
             EmployeeDAL ed = new EmployeeDAL();
-          
+            object o;
+            bool b;
+            int id = Convert.ToInt32(Session["tId"]);
             if (ModelState.IsValid)
             {
                 using (var trans = db.Database.BeginTransaction())
@@ -359,8 +368,7 @@ namespace MyProject.Controllers
                     try
                     {
                         db.Entry(request).State = EntityState.Modified;
-                        object o;
-                        bool b;
+                        
                         b = TempData.TryGetValue("subDate", out o);
                         request.SubmitDate = (System.DateTime)o;
                         b = TempData.TryGetValue("depDate", out o);
@@ -370,8 +378,9 @@ namespace MyProject.Controllers
                         b = TempData.TryGetValue("delID", out o);
                         request.DelegationId = (Int32)o;
 
-                        //request.Transport?????
-
+                        request.TransportId = id;
+                        request.Transport = db.MyTransport.Find(id);
+                       
                         db.SaveChanges();
 
                         b = TempData.TryGetValue("applicant", out o);
@@ -403,6 +412,12 @@ namespace MyProject.Controllers
                         TempData.Clear();
                         trans.Commit();
                     }
+                    catch(OptimisticConcurrencyException)
+                    {
+                        
+                        //db.Refresh(RefreshMode.ClientWins, db.MyTransport);
+                        db.SaveChanges();
+                    }
                     catch (Exception e)
                     {
                         trans.Rollback();
@@ -413,7 +428,7 @@ namespace MyProject.Controllers
             }
             ViewBag.DelegationId = new SelectList(db.MyDelegation, "DelegationId", "DelegationType", request.DelegationId);
             ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName");
-            ViewBag.TransportId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
+            ViewBag.TransCompId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
             ViewBag.AllowanceId = new SelectList(db.Allowances, "AllowanceId", "Amount");
 
 

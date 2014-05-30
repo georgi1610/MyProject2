@@ -1,0 +1,1132 @@
+I. Transferul de fisiere (FTP- File Transfer Protocol)
+
+                   
+
+ 
+
+ 
+
+De multe ori utilizatorul doreste sa aiba o copie proprie a unor fisiere pe
+
+discheta sau pe calculatorul de pe care lucreaza. Pentru o astfel de copiere
+
+se foloseste instrumentul ftp, denumit astfel dupa protocolul pe care il
+
+utilizeaza (FTP- File Transfer Protocol), adica un protocol de transfer de
+
+fisiere.
+
+ 
+
+ 
+
+Deschiderea unei sesiuni de lucru ftp
+
+-------------------------------------
+
+ 
+
+Pentru folosirea instrumentului ftp trebuie mai intai sa se indice masina cu
+
+care se doreste sa se schimbe fisiere.  Vom referi aceasta masina prin
+
+"masina de la distanta".  Masina curenta, pe care ne aflam in momentul in
+
+care am lansat ftp, o vom numi in cele ce urmeaza prin "masina locala".
+
+ 
+
+Prin comanda:
+
+ 
+
+      ftp <nume-masina-de-la-distanta>
+
+ 
+
+se lanseaza programul ftp si se realizeaza conectarea la masina de la
+
+distanta. Dupa realizarea acestei conectari utilizatorul va trebui sa
+
+introduca numele de login si parola (password).
+
+ 
+
+      Exemplu: Conectarea utilizatorului mpopescu pe masina
+
+      ftp.bocu.ro, de pe o masina oarecare (locala)
+
+      se face astfel:
+
+ 
+
+            c:\>ftp ftp.bocu.ro
+
+            Connected to ftp.bocu.ro.
+
+            220 bocu FTP server ready.
+
+            Name (bocu:mpopescu): mpopescu
+
+            331 Password required for mpopescu.
+
+            Password:
+
+            230 User mpopescu logged in.
+
+            Remote system type is UNIX.
+
+            Using binary mode to transfer files.
+
+            ftp>
+
+ 
+
+Daca din cauza unei erori de introducere se obtine un mesaj de tipul "login
+
+incorect" fie se poate iesi din ftp cu comanda bye si se incearca o noua
+
+conectare, fie se introduce comanda user urmata de numele de login pentru a
+
+restarta procesul de conectare.  Se va solicita din nou parola sesiunea
+
+continuand ca mai sus.
+
+ 
+
+Conexiunea poate deveni imposibila si din cauze subiective (introducerea
+
+gresita a numelui calculatorului de la distanta), sau din cauze obiective (a
+
+avut loc o oprire a acestuia).  Apar astfel mesaje precum "unknown host",
+
+"host unreachable", "host not responding", "connection timed out".  In
+
+aceste cazuri se incearca conectarea din nou imediat sau dupa un timp.
+
+ 
+
+Dupa acceptare de catre sistemul de la distanta a numelui de conectare si a
+
+parolei, utilizatorul poate sa inceapa transferul de fisiere. Instrumentul
+
+ftp poate transfera fisiere in ambele directii, putand aduce fisiere de pe
+
+masina de la distanta pe masina de pe care s-a conectat (cu comanda get) si
+
+putand pune fisiere pe masina de la distanta de pe masina de pe care s-a
+
+conectat (cu comanda put).
+
+ 
+
+Comenzile get si put au urmatoarea sintaxa:
+
+ 
+
+      ftp>get <fisier sursa> [fisier destinatie]
+
+ 
+
+      ftp>put <fisier sursa> [fisier destinatie]
+
+ 
+
+unde <fisier sursa> este numele fisierului existent (care se doreste a fi
+
+copiat) si <fisier destinatie> este numele copiei nou create.  Daca numele
+
+fisierului destinatie lipseste, se considera acelasi cu numele fisierului
+
+sursa.
+
+ 
+
+      Exemplu : Dupa deschiderea sesiunii ftp, dupa cum am aratat mai sus,
+
+      utilizatorul mpopescu poate sa transfere fisierul text1.txt de pe
+
+      nessie (masina de la distanta), pe masina locala cu comanda
+
+            ftp>get text1.txt
+
+      Daca doreste transferul de pe masina locala pe nessie a fisierului
+
+      news.doc trebuie sa introduca comanda
+
+            ftp>put news.doc
+
+   
+
+Dupa fiecare transfer programul comunica ce a transferat, cat de mare a fost
+
+cantitatea de date transferata si rata medie de transfer.
+
+ 
+
+ 
+
+ 
+
+ 
+
+Exploatarea cu ftp a unei masini aflate la distanta
+
+---------------------------------------------------
+
+ 
+
+ 
+
+Listarea continutului unui director de pe masina de la distanta se face cu
+
+comenzile:
+
+ 
+
+      ftp>ls  <nume director>
+
+      ftp>dir <nume director>
+
+ 
+
+Trecerea dintr-un director in altul pe masina de la distanta se face cu
+
+comanda:
+
+ 
+
+      ftp>cd <nume director>
+
+ 
+
+ 
+
+Listarea continutului unui director de pe masina locala se face cu
+
+comenzile:
+
+ 
+
+      ftp>!ls  <nume director>
+
+      ftp>!dir <nume director>
+
+ 
+
+Trecerea dintr-un director in altul pe masina locala se face cu
+
+comanda:
+
+ 
+
+      ftp>lcd <nume director>
+
+ 
+
+Observatie :cu exceptia schimbarii de director, toate comenzile cu "!" in
+
+            fata se refera si se executa pe masina locala.
+
+ 
+
+Daca se doreste transferul fisierelor pe discheta, intr-un anumit director
+
+trebuie data comanda
+
+ 
+
+      ftp>lcd a:<nume director>
+
+ 
+
+inainte de comenziile get sau put in caz contrar toate transferurile fiind
+
+facute pe hard disk in directorul local (initial cel din care s-a lansat ftp).
+
+ 
+
+ 
+
+Terminarea sesiunii ftp
+
+-----------------------
+
+ 
+
+Pentru terminarea unei sesiuni ftp se da comanda
+
+ 
+
+      ftp>bye
+
+***
+
+Deschiderea unei sesiuni pe o masina la distanta se poate face cu ajutorul comenzii telnet astfel:
+
+ 
+
+c:\>telnet masina [port]
+
+ 
+
+Daca [port] nu se specifica el este considerat implicit portul 23.
+
+***
+
+Posta electronica (email)
+
+ 
+
+ 
+
+I. Comanda mail
+
+ 
+
+ 
+
+  Aceasta comanda este una din comenzile oferite de UNIX pentru gestiunea a
+
+ceea ce se numeste "posta electronica". Fiecare utilizator are o "cutie postala"
+
+pastrata pe calculatorul pe care are un cont. Adresa de posta electronica a unui
+
+utilizator se compune din
+
+    nume-utilizator@adresa-nod
+
+ 
+
+Exemple:       uni-cluj@pi-bucuresti.th-darmstadt.de
+
+               boier@cs.purdue.edu
+
+ 
+
+A) Transmiterea de mesaje:
+
+Exemplu:
+
+ 
+
+      $ mail john@ux1.cso.uiu
+
+      Subject: cluj
+
+      Dear John
+
+      I'm waiting for your answer....
+
+      Sincerely yours
+
+      ~.
+
+      $
+
+ 
+
+Pentru transmis mesaje se apeleaza:
+
+     mail <adresa-utilizator>
+
+se introduce subiectul scrisorii dupa care se introduce textul scrisorii
+
+incheiat de secventa:
+
+     ~.
+
+In interiorul mesajului se poate introduce un fisier text cu ajutorul comenzii:
+
+     ~r <nume-fisier>
+
+ 
+
+B) Citirea postei
+
+      Se face cu comanda mailx (sau mail) fara nici un parametru. Ca rezultat se
+
+  va afisa lista mesajelor din cutia postala.
+
+  In fata fiecarui mesaj se va afla unul din caracterele:
+
+      N  - mesaj nou venit
+
+      U  - mesaj ce nu a fost inca citit
+
+      P  - mesaj marcat pentru pastrare in sesiunea curenta
+
+ <spatiu>- mesaj citit si pastrat dintr-o sesiune anterioara
+
+ 
+
+Prompterul utilitarului mail difera de la o implementare la alta.
+
+Exemple:
+
+      mx?     &
+
+Exista mai multe grupuri de comenzi ce pot fi date la acest prompter:
+
+ 
+
+  a) De citire
+
+       =        afisarea numarului mesajului curent
+
+       help     lista comenzilor
+
+       ?        idem
+
+       next     afiseaza mesajul urmator
+
+       headers  afiseaza lista antetelor mesajelor
+
+  b) De editare
+
+       e        editeaza mesajul curent
+
+       delete   sterge mesajul curent
+
+       undelete anuleaza ultima stergere
+
+  c) De salvare
+
+       save <lista-de-comenzi> <nume-fisier>  salveaza mesajele indicate
+
+                                              cu stergerea acestora din
+
+                                              cutia postala (mbox)
+
+       copy <lista-de-comenzi> <nume-fisier>  salveaza mesajele indicate
+
+                                              cu pastrarea acestora in
+
+                                              cutia postala (mbox)
+
+  d) De raspuns
+
+       Reply mesaj              raspunde mesajului
+
+       reply mesaj              raspunde mesajului inclusiv
+
+                                celorlalti destinatari
+
+       mail lista-utilizatori   transmite o scrisoare utilizatorilor
+
+                                specificati
+
+  e) De terminare
+
+       quit   terminare cu salvarea mesajelor citite
+
+       exit   terminare fara modificare
+
+ 
+
+ 
+
+ 
+
+II. Utilitarul pine (sau alpine pentru platformele Linux mai noi)
+
+ 
+
+ 
+
+      O adresa de email corecta in Internet este formata din numele de utilizator,
+
+caracterul "@" si numele domeniului din care face parte. Spre exemplu
+
+in adresa razvan@bocu.ro, "razvan" este numele utilizatorului iar
+
+"bocu.ro" este numele domeniului.
+
+ 
+
+In cele ce urmeaza prin folder vom referi o "cutie" de mesaje.
+
+ 
+
+1. Lansarea programului pine
+
+ 
+
+Lansarea programului pine se realizeaza prin introducerea  comenzii "pine"
+
+urmata de CR, comanda care va avea ca efect aparitia pe ecran a  urmatorului
+
+meniu:
+
+ 
+
+       ?     HELP             -  Informatii despre modul de utilizare
+
+ 
+
+       C     COMPOSE MESSAGE  -  Compunerea si transmiterea mesajelor
+
+ 
+
+       I     FOLDER INDEX     -  Afisarea mesajelor din folder-ul curent
+
+ 
+
+       L     FOLDER LIST      -  Selectarea unui folder pentru afisare
+
+ 
+
+       A     ADDRESS BOOK     -  Actualizarea fisierului de adrese
+
+ 
+
+       S     SETUP            -  Configurea sau actualizarea Pine-ului
+
+ 
+
+       Q     QUIT             -  Iesirea din program
+
+ 
+
+ 
+
+ 
+
+2. Compunerea si transmiterea mesajelor
+
+ 
+
+Aceasta optiune se activeaza prin tastarea literei "C" sau prin selectarea
+
+liniei corespunzatoare cu ajutorul sagetilor urmata de tastarea lui <CR>.
+
+ 
+
+La compunerea unui mesaj va apare urmatorul antet:
+
+ 
+
+To      :
+
+Cc      :
+
+Attchmnt:
+
+Subject :
+
+----- Message Text -----
+
+...
+
+// mesajul propriu zis
+
+...
+
+ 
+
+Campul "To"
+
+Se completeaza cu una sau mai multe adrese destinatie, separate prin virgula. 
+
+Adresa destinatarului poate fi avea una din urmatoarele forme:
+
+- numele complet al destinatarului, urmat de adresa de e-mail scrisa intre
+
+  caracterele < >
+
+ 
+
+      Exemplu :
+
+            To    :Mihai POPESCU <mpopescu@cs.ubbcluj.ro>
+
+ 
+
+- un nume local, in cazul in care destinatarul si expeditorul au acelasi
+
+  domeniu de adresa
+
+ 
+
+      Exemplu : daca expeditorul are adresa de e-mail pionescu@cs.ubbcluj.ro
+
+            To    :mpopescu
+
+      In aceasta situatie, la trecerea cursorului la campul urmator,
+
+      adresa se va completa automat cu numele domeniului, adica va fi:
+
+            To    :mpopescu@cs.ubbcluj.ro
+
+ 
+
+- un nume scurt (porecla) pentru un destinatar care se afla in fisierul cu
+
+  adrese.
+
+ 
+
+      Exemplu : daca in fisierul de adrese exista linia
+
+            mita  Mihai POPESCU mpopescu@cs.ubbcluj.ro
+
+      se poate completa
+
+            To    :mita
+
+      iar la trecerea cursorului la campul urmator adresa se va completa
+
+      automat cu numele complet al destinatarului, adica va fi:
+
+            To    :Mihai POPESCU <mpopescu@cs.ubbcluj.ro>
+
+ 
+
+Observatie:
+
+- daca adresa introdusa la campul "To" nu este corecta, dupa transmiterea
+
+  mesajului, se va primi un mesaj de eroare.
+
+     
+
+Campul "Cc"
+
+Se completeaza cu adresa sau adresele unor persoane care dorim sa primeasca
+
+mesajul desi nu li se adreseaza in mod direct.  Completarea acestui camp se
+
+face exact ca si la campul "To".
+
+ 
+
+Campul "Attchmnt"
+
+Se completeaza cu numele de fisier(e) din directorul curent pe care dorim sa
+
+le atasam la mesajul compus.
+
+ 
+
+      Exemplu : daca in directorul curent avem fisierele cu numele
+
+      "text1.txt" si " text2.txt" si dorim sa le atasam mesajului, acest
+
+      camp se completeaza cu:
+
+            Attchmnt:text1.txt, text2.txt
+
+       Dupa trecerea cursorului in campul urmator, acest camp va arata
+
+      astfel:
+
+            Attchmnt:1. /home/pionescu/text1.txt (1.1 Kb),
+
+                   2. /home/pionescu/text2.txt (2.3 Kb) "" 
+
+ 
+
+Campul "Subject"
+
+Se completeaza cu cateva cuvinte care sa rezume continutul mesajului.
+
+ 
+
+      Exemplu :
+
+            Subject: Vesti bune!
+
+            Subject: Invitatie la Congres
+
+Observatie:
+
+- cu exceptia campului "To" celelalte campuri pot ramane necompletate.
+
+ 
+
+ 
+
+Pentru scrierea mesajului "pine" ofera editorul "pico", a carui comenzi sunt
+
+descrise pe scurt in continuare.
+
+ 
+
+Deplasarea cursorului:
+
+---------------------
+
+^B (sageata stanga)  caracterul precedent 
+
+^F (sageata dreapta) caracterul urmator
+
+^P (sageata in sus)  linia precedenta
+
+^N (sageata in jos)  linia urmatoare  
+
+^A                   inceput de linie  
+
+^E                   sfarsit de linie   
+
+^Y                   pagina precedenta
+
+^V                   pagina urmatoare
+
+^@ (Ctrl-SPACE)      cuvantul urmator
+
+ 
+
+Comenzi pentru editare:
+
+-----------------------
+
+^D       sterge caracterul curent 
+
+^H (DEL) sterge caracterul din stanga
+
+^K       sterge linia curenta
+
+^W       cauta un sir de caractere in textul editat, si daca il gaseste
+
+         se pozitioneaza pe prima aparitie a lui
+
+^R       cere numele unui fisier a carui continut va fi inserat in mesaj
+
+         dupa pozitia curenta a cursorului
+
+^C       abandoneaza editarea mesajului
+
+ 
+
+Comenzi referitoare la mesaj
+
+----------------------------
+
+^O    salveaza ce s-a scris pana in acel moment si permite
+
+       consultarea sau editarea altor mesaje. Intoarcerea la mesajul
+
+       salvat se face raspunzand cu "yes" la intrebarea "Continue
+
+       postponed composition?" care apare de fiecare data cand se va
+
+       mai incerca compunerea unui mesaj)
+
+^X    transmiterea efectiva a mesajului la adresa mentionata 
+
+ 
+
+Terminarea operatiei de compunere a unui mesaj si revenirea in meniul principal
+
+se poate face asadar cu ajutorul uneia din comenzile ^C, ^X si respectiv ^O
+
+descrise detaliat mai sus.
+
+ 
+
+ 
+
+3. Consultarea si gestionarea mesajelor
+
+ 
+
+Pentru citirea mesajelor se tasteaza "L" sau se selecteaza cu ajutorul
+
+sagetilor linia a patra din meniul principal. Se va obtine astfel o lista cu
+
+folderele (directoarele) in care avem mesaje.  Initial aceasta lista contine
+
+un singur folder numit INBOX.  Implicit, orice mesaj nou receptionat va intra
+
+in acest folder.  In oricare din foldere, implicit si in INBOX, se va intra
+
+tastand <CR> dupa ce a fost selectat cu ajutorul sagetilor din cadrul listei
+
+de foldere.
+
+ 
+
+La intrarea intr-un folder va fi afisata lista mesajelor continute de acesta.
+
+Mesajele care nu au fost inca citite vor fi marcate cu caracterul "N" in fata.
+
+Pentru vizualizarea continutului unui mesaj trebuie sa ne pozitionam pe el si
+
+sa tastam <CR>. Terminarea vizualizarii unui mesaj se poate face prin:
+
+- tasta "M", cu revenire la meniul principal
+
+- tasta "L", cu revenire la lista de foldere
+
+- tasta "I", cu revenire la lista de mesaje
+
+ 
+
+Daca am citit un mesaj si dorim sa le citim pe urmatoarele nu este neaparat
+
+necesar sa ne intoarcem la lista de mesaje, se poate parcurge lista de mesaje
+
+dupa cum urmeaza :
+
+- tasta "N"   pentru a afisa mesajul urmator
+
+- tasta "P"   pentru a afisa mesajul precedent
+
+ 
+
+Daca mesajul primit contine fisiere atasate atunci tastand "V" se poate obtine
+
+lista acestor fisiere.  Prin selectarea numelui unui astfel de fisier urmat de
+
+<CR> este vizualizat continutul acestuia.
+
+ 
+
+      Exemplu : Mesajul cu urmatorul antet:
+
+ 
+
+            To    : mpopescu@cs.ubbcluj.ro
+
+            Cc    :
+
+            Attchmnt:text1.txt, text2.txt
+
+            Subject :Texte
+
+            --- Message Text ---
+
+            Ti-am trimis doua texte!
+
+ 
+
+      va fi receptionat sub forma
+
+ 
+
+            From  : Petru IONESCU <pionescu@cs.ubbcluj.ro>
+
+            To    : Mihai POPESCU <mpopescu@cs.ubbcluj.ro>
+
+            Subject     : Texte
+
+            Parts/attachments:
+
+               1 Shown   1 lines  Text                                                     
+
+               2   OK   24 lines  Text, ""                                                
+
+               3   OK   24 lines  Text, ""                                                
+
+            ----------------------------------------
+
+ 
+
+            Ti-am trimis niste texte
+
+ 
+
+              [Part 2, ""  Text  24 lines]
+
+              [Not Shown. Use the "V" command to view or save this part]
+
+ 
+
+ 
+
+              [Part 3, ""  Text  28 lines]
+
+              [Not Shown. Use the "V" command to view or save this part]
+
+ 
+
+      Prin utilizarea comenzii V se va obtine urmatoarea lista:
+
+ 
+
+                1    2 lines   Text                                                         
+
+                2   24 lines   Text, ""                                                     
+
+                3   28 lines   Text, ""                                                      
+
+ 
+
+      care poate fi parcursa si consultata ca un folder obisnuit.
+
+ 
+
+           
+
+ 
+
+Dupa citirea unui mesaj se poate
+
+- tasta "R" pentru araspunde la mesajul respectiv
+
+- tasta "F" transmite mesajul mai departe la o alta adresa,
+
+- tasta "S" salvarea mesajului intr-un folder specific
+
+- tasta "E" salvarea mesajului intr-un fisier, care ulterior sa fie
+
+  listat, copiat, etc.
+
+ 
+
+Dupa ce un mesaj a fost citit si prelucrat intr-unul din modurile de mai sus
+
+se recomanda ca acesta sa fie sters din folderul INBOX, aceasta se realizeaza
+
+tastand "D" in dreptul mesajului respectiv la nivelul listei de mesaje sau in
+
+timp ce mesajul este vizualizat pentru citire.
+
+ 
+
+La nivelul listei de mesaje, literele initiale care pot sa marcheze un mesaj
+
+au semnificatiile
+
+- "N", mesaj nou venit,
+
+- "D", mesaj marcat pentru stergere
+
+- "A", mesaj la care s-a raspuns.
+
+ 
+
+In afara de folderul INBOX, "pine" mai creaza implicit un folder "sent-mail"
+
+in care salveaza toate mesajele transmise si un folder "saved-messages" care
+
+este considerat folder implicit pentru salvarea mesajelor prin tastarea
+
+caracterului "S". Aceste foldere cat si cele create explicit de utilizator
+
+au structura si pot fi exploatate in acelasi mod cu folderul INBOX. In mod
+
+deosebit se recomanda consultarea periodica a folderului "sent-mail" si
+
+stergerea mesajelor din acesta.
+
+ 
+
+ 
+
+4. Fisierul de adrese
+
+ 
+
+In fisierul de adrese poate fi vizualizat din meniul principal tastand "A" sau
+
+selectand cu ajutorul sagetilor linia corespunzatoare din meniul principal
+
+si tastand <CR>. Acest fisier poate fi completat cu noi adrese tastand "A" in
+
+timp ce acesta este afisat pe ecran, dupa care se completeaza la cerere:
+
+- numele complet, urmat de <CR>
+
+- nume scurt sau porecla, pentru referirea rapida a adresei respective, <CR>
+
+- adresa propriu-zisa de e-mail, <CR>.
+
+ 
+
+      Exemplu :
+
+      New full name (Last, First):Mihai POPESCU
+
+      Enter new nickname (un cuvant usor de retinut):mita
+
+      Enter new e-mail address: mpopescu@cs.ubbcluj.ro
+
+ 
+
+Daca dorim sa completam fisierul de adrese cu adresa expeditorului unui mesaj
+
+pe care l-am primit atunci se tasteaza "T" in timp ce mesajul respectiv este
+
+vizualizat, dupa care se introduce doar numele scurt (porecla) urmata de <CR>,
+
+respectiv de doua  ori <CR> pentru confirmarea numelui complet si pentru
+
+confirmarea adresei.
+
+ 
+
+Daca selectam o adresa cu ajutorul sagetilor si apoi tastam "C" atunci se
+
+afiseaza antetul pentru compunerea unui mesaj iar campul "To" este completat
+
+automat cu adresa care era selectata in fisierul de adrese. Se poate cauta o
+
+adresa tastand "W" si introducand numele cautat.
+
+ 
+
+O adresa din acest fisier poate fi stearsa tastand "D" sau poate fi modificata
+
+(editata) tastand "E", dupa ce a fost selectata in cadrul fisierului de adrese.
+
+ 
+
+ 
+
+5. Iesirea din pine
+
+ 
+
+Iesirea din "pine" se face tastand caracterul "Q" sau selectand ultima linia a
+
+meniului principal, urmata de <CR>.
+
+***
+
+UTILIZARE XWINDOW
+
+X Window este un sistem de interactiune cu utilizatorul orientat spre
+ferestre, care poate fi facut operational pe o mare varietate de
+calculatoare care lucreaza sub diverse sisteme de operare. A fost conceput
+la MIT (Massachusetts Institute of Technology), proiectul fiind puternic
+sustinut de IBM Si de DEC. A aparut pe piata aproximativ in 1987, iar in
+prezent este acceptat ca standard "de facto" de fabricantii statiilor de
+lucru grafice. Scopul sistemului X este de a furniza programelor de
+aplicatii un mediu de lucru independent de particularitatile statiei de
+lucru, a SO sub care se lucreaza, a retelei in care este integrat etc.
+Pentru un utilizator oarecare este transparent faptul ca aplicatia lui se
+executa in retea, deci ca se executa pe un calculator iar rezultatele ii
+sunt afisate pe ecranul altuia. De asemenea, o statie X poate fi conectata
+in acelasi timp la mai multe aplicatii executate pe calculatoare diferite.
+
+Programul care controleaza fiecare display este programul X Server (XS). El
+actioneaza ca si intermediar intre display si programele utilizator, numite
+clienti sau aplicatii. Acestea din urma pot rula fie pe sistemul local, fie
+pe un sistem aflat la distanta si care foloseste resursele grafice ale
+sistemului local. Conexiunea la un XS se face implicit pe portul 6000.
+
+Intreaga interfata a clientilor cu XS este realizata cu ajutorul bibliotecii
+Xlib (XL).
+
+Performantele unui sistem X intr-o retea depind in mare masura de
+performantele masinilor, in special de calitatile si performantele lor
+grafice. Intotdeauna XS se ruleaza pe statia locala. Pentru a se asigura
+eficienta mare, de multe ori se lanseaza si clientul WM (Windows Manager) tot
+pe masina locala. De exemplu, statiile de tip X Terminal dispun de memoria
+RAM proprie si pe langa un XS propriu, mai au si un WM propriu. Daca utilizatorul
+doreste, el poate sa-si lanseze un WM de oriunde din retea: de pe masina
+client, de pe o alta masina etc. Evident, apare astfel posibilitatea ca o
+anumita masina din retea sa fie supraaglomerata deoarece pe ea sunt rulate
+WM-uri pentru multi utilizatori din retea.
+
+Numarul de programe care folosesc specificatiile X a ajuns de ordinul miilor
+la aceasta ora. Vom aminti cateva care sunt de larg interes si sunt
+disponibile, printre altele sub UNIX System V 4.0:
+      xterm emulator de terminale;
+
+Utilizare xterm:
+
+      - se presupune ca pe masina locala este pornit un XS (sau un
+emulator de XS) la care se vor conecta clientii de pe masina UNIX
+      - in cadrul unei conexiuni obisnuite (telnet sau (recomandat) ssh)
+la o una din masinile (disco.scs.ubbcluj.ro sau rave.scs.ubbcluj.ro in cazul
+nostru) ce au instalate XWindow respectiv programe client XWindow se
+lanseaza comanda:
+
+      xterm -display nume_masina_local:0.0 & sau
+
+      xterm -display ip_masina_locala:0.0 &
+
+      Aceasta din urma varianta este preferata pentru reteaua locala din
+laboratoarele SCS datorita modului de atribuire dinamic al adreselor
+calculatorelor client de catre serverul Windows NT. Pentru aflarea acestei
+adrese se foloseste comanda ipconfig lansata dintr-o fereastra DOS; la fel
+de bine insa se poate afla si din mediul Unix acest lucru; de exemplu,
+folosind comanda w in pipe cu comanda grep avand ca si parametru numele
+utilizatorului care doreste sa isi lanseze un xterm se poate afla numele statiei
+sau ip-ul masinii windows NT de pe care utilizatorul respectiv este conectat.
+
+      Aceasta comanda este esentiala si de ea depinde in continuare lucrul
+cu aplicatiile X; daca aceasta comanda esueaza acest lucru se poate intampla
+datorita, de exemplu, faptului ca aplicatia xterm (care este un clienty) nu
+se poate conecta la serverul Xwindow.
+     
+      In acest din urma caz se poate verifica faptul ca de pe masina de pe
+care se lanseaza comanda xterm este accesibila masina pe care ruleaza XS. Se
+poate verifica usor acest lucru folosind comanda traceroute. In cazul
+retelei local SCS bazata in mod exclusiv pe adrese false (nerutabile in
+exterior), au trebuit specificate in mod explicit de catre administratori
+rute inverse spre aceste adrese false (invers erau rute implicite). Daca
+prin comanda traceroute serverul X este accesibil, atunci poate fi problema
+conexiunii pe portul 6000, interzisa de firewall.
+
+      In momentul in care aceasta comanda este executata se deschide o noua
+fereastra din care se pot lansa comenzi X dintre care enumeram:
+      twm gestionar de ferestre (window manager);
+      xdm gestionar de statii de afisare (display manager);
+      xman program care gestioneaza si afiseaza manuale UNIX;
+      xmeditor, xedit editoare de texte;
+      xedit prezinta o fereastra cu 4 sectiuni:
+            - o sectiune de comenzi care permit iesire din xedit,
+salvarea fisierului, sau incarcarea unui nou fisier in fereastra de editare
+            - o fereastra de mesaje care afiseaza mesajele pe care le
+genereaz xedit
+            - portiunea de afisare a numelui fisierului editat, precum
+si a informatiei daca acest fisier este deschis si in citire si in scriere,
+sau este deschis numai in citire
+            - in fine, este sectiune de editare propriu-zisa
+      bitmap, xpaint editoare grafice;
+      xmh, xbiff utilitare destinate postei electronice;
+      xclock, oclock afisari de ceasuri;
+      xfd program care gestioneaza fonturi;
+      xlsfonts, xfontsel, xlswins, xwininfo, xlsclients, xdpyinfo, xprop:
+utilitare care dau informatii despre fonturi, ferestre, clienti si statii;
+      xauth, xhost utilitare de control al accesului;
+      xrdb, xset, xsetroot, xmodmap pentru fixarea de catre utilizatori a
+unor parametri ai sistemului X;
+      xwd, xwud, xpr, xmag utilitare de manipulare a imaginilor de pe
+ecran;
+      xeyes, ico, muncher, puzzle, xgc etc. sunt cateva programe cu jocuri
+demonstrative sub sistemul X.
+      xcpustate, xsysinfo: furnizeaza informatii grafice referitoare la
+starea sistemului Unix
+      De asemenea, exista o multitudine de alte programe si utilitare
+XWindow: ee (Electric Eyes: pentru afisarea de imagini), etc.
+
+      In general orice comanda care incepe cu litera x este o comanda
+specfica sistemului XWindow. Asa cum se poate vedea insa mai sus (exemplu:
+utilitarul ee), aceasta nu este o regula generala.
+
+      Facem precizarea ca toate aceste programe se executa direct pe
+masinile Unix (folosind deci toate resursele respectivelor masini: procesor,
+memorie, disk etc.) iar rezultatul lor este afisat prin intermediul xterm pe
+masina locala.
+
+***
+
+Probleme cu urmatoarele comenzi: telnet, ftp, ssh, xterm
+
+ 
+
+1.        Sa se aduca cu ajutorul comenzii ftp într-o sesiune Linux mai multe fisiere. Dupa ce download-ul fisierelor a început, utilizatorul va închide sesiunea Linux, fara a opri însa download-ul.
+
+2.        Sa se determine cu ajutorul comenzii telnet sau ssh numarul de sesiuni pe care le poate deschide un utilizator pe unul din servele Linux. Sa se verifice daca se pot deschide mai multe sesiuni cu ajutorul comenzii xterm si a unui XServer.
+
+3.        Sa se transfere cu ajutorul comenzii ftp un fisier binar (imagine  gif sau jpeg) de pe un server Linux pe o masina Windows. Transferul se va face in modul ASCII, dupa care se va încerca vizualizarea imaginii. Aceasta va fi evident corupta. Sa se gaseasca o modalitate de a refece fisierul, în ipoteza ca fisierul original de pe serverul Linux a fost sters.
+
+4.        Sa se numeasca si prezenta într-o scurta documentatie alte doua comenzi Linux, în afara de ftp care se pot folosi pentru transferul fisierelor de pe un server ftp.
+
+5.        Sa se citeasca posta electronica fara a utiliza o sesiune telnet si comanda pine, si fara a apela la un client dedicat pentru posta electronica cum ar fi Outlook-Express sau Netscape-Messenger.
+
+6.        Sa se enumere trei comenzi pentru terminarea sesiunii telnet de lucru curente pe un server Linux. Sa se scrie una dintre aceste comenzi la sfârsitul fisierului .bash_profile aflat în directorul personal al fiecarui utilizator. Sa se rezolve toate eventualele urmari nedorite care pot aparea ca urmare a acestei actiuni.
+
+7.        Sa se dea un scurt exemplu de folosire a comenzii ssh. Se va rula comanda ssh cu mai multi parametri.  Unul  dintre parametrii comenzii ssh trebuie sa fie alta comanda ssh.
+
+8.        Sa se copieze un fisier între doua masini Linux folosind un protocol criptat, care asigura confidentialitatea datelor trimise sau primite.
+
+9.        Sa se afiseze modul de deschidere a sesiuni curente de lucru: telnet, ssh sau xtem.
+
+10.     Sa se utilizeze cât mai multe valori pentru variabila de mediu TERM. Sa se gaseasca o modalitate de a apela într-un terminal Linux tastele functionale: F1, F2… F10.
+
+ Tema se va prezenta sub forma unui document care va contine o descriere succinta a pasilor parcursi pentru a efectua cerintele(problemele din lista de mai sus), incluzand comenzile respective.

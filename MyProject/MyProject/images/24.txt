@@ -1,0 +1,34 @@
+Cerintele de mai jos se vor rezolva folosind comenzile: man, ls, cat, less, more, mkdir, cd, rm, rmdir, chmod, passwd, ps, jobs, bg, fg, kill, file, ln, find, cp, mv, df, du, diff, pwd.
+
+    listati continutul directoarelor /, /bin, /usr, /etc, /usr/include. Acolo unde este cazul, paginati listarea (ls | less).
+    cautati, in fisierul /usr/include/stdio.h, textul printf.
+    creati, in directorul personal, urmatoarea structura de directoare si fisiere:
+
+      (dir. personal)
+        |
+        +-- abc
+        |    +-- x (fisier)
+        |    +-- y (fisier)
+        |    +-- t1 (fisier)
+        |    +-- t2 (fisier)
+        |    +-- t3 (fisier)
+        |    +-- t (director)
+        |        +-- a (fisier)
+        |        +-- b (fisier)
+        |
+        +-- zz (director)
+        |    +-- x (fisier)
+        |
+        +-- tt (director)
+
+    copiati directorul abc cu tot continutul sau (recursiv) ca subdirector al lui zz (va rezulta un subdirector abc in zz)
+    copiati continutul lui abc in directorul zz fara a suprascrie fisierele cu acelasi nume (x, in cazul nostru)
+    copiati fisierele t1 si t2 din abc in tt (folosind specificator generic) t*
+    creati un director pe care sa va dati dreptul x fara a avea dreptul r. Creati in el un fisier. Ce observati? Dati-va apoi dreptul r si luati-va dreptul x. Ce observati ?
+    dati drepturile potrivite astfel incat oricine sa poata vizualiza continutul directoarelor abc si abc/t, sa poata adauga fisiere in abc/t, sa poata citi fisierele x, y, t1, t2, t3 din abc dar sa nu poata citi fisierele a si b din abc/t
+    listati in format lung fisierele t, t1, t2, t3 din abc (sa se vada drepturile de acces asupra lui t, nu asupra fisierelor din el
+    comanda copy /dev/zero /dev/null este un fel de 'ciclu infinit' (nu se termina). Lansati-o, mutati-o in background, listati procesele active, terminati comanda (in ambele variante: mutata in foreground si oprita cu ^C, sau cu kill).
+    arhivati structura de directoare folosind utilitarul zip sau utilitarele tar si gz.
+    stergeti directoarele si refaceti structura pornind de la arhiva. Verificati conservarea datei creerii si drepturilor de acces.
+    creati in tt un link simbolic cu numele c catre abc. Explorati functionarea lui, vis-a-vis de comenzile cd si pwd.
+    creati un fisier text in care veti scrie comenzile cu care ati rezolvat cerintele de mai sus, precum si raspunsul la intrebari.

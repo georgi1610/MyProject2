@@ -3,9 +3,16 @@
 @{
     ViewBag.Title = "Edit";
 }
+
 <link href="~/Content/style.css" rel="stylesheet" type="text/css" media="all" />
 <script type="text/javascript" src="~/Scripts/jquery-1.3.2.min.js"> </script>
 <script type="text/javascript" src="~/Scripts/script.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+
+<link href="~/Content/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery-ui-1.10.4.js"></script>
+
 
 <h2>Edit</h2>
 
@@ -65,42 +72,6 @@
             </div>
         </div>
 
-        <div>
-            <!--existing transports-->
-            @using (@Html.BeginForm())
-            {<table border="1">
-                <tr>
-                    <th>
-                        Select
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Transport.TransportId)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Transport.TransportComp)
-                    </th>
-                </tr>
-                @foreach (var item in Model.Transport)
-                {
-                <tr>
-                    <td>
-                        <input type="checkbox" />
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Transport.TransportId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => model.Transport.TransportComp.CompanyName)
-                    </td>
-                </tr>
-                }
-
-            </table>
-            }
-        </div>
-
-
-
 
         <!--Html.ActionLink("Add Transport Details", "../Transport/Create") -->
         <br/>
@@ -109,60 +80,109 @@
             <div class="close"></div>
             <span class="ecs_tooltip">Press Esc to close <span class="arrow"></span></span>
             <div id="popup_content">
-                <!--{Html.RenderPartial("../Request/_Details");}-->
-                <div>
-                    @using (@Html.BeginForm())
-                    {
-                        <h2>Add Transport Details</h2>
-                        <fieldset>
-                            <table>
+            
+                <div id="tabs">
+                    <ul>
+                        <li><a href="#tabs-1">Existing transports</a></li>
+                        <li><a href="#tabs-2">New transport</a></li>
+                    </ul>
+                    <div id="tabs-1">
+                        <!--existing transports-->
+                        @using (@Html.BeginForm())
+                        { 
+                           
+                            @Html.ValidationSummary()
+                            <table border="1">
+                            <tr>
+                                <th>
+                                    Select
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Transport.TransportId)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Transport.TransportComp)
+                                </th>
+                            </tr>
+                            @foreach (var item in ViewBag.Transports)
+                            {
                                 <tr>
-                                    <td><b>Departure Date</b></td>
-                                    <td>@Html.EditorFor(model => model.Transport.DepartureDateTime)</td>
+                                    <td>
+                                        <input type="checkbox"/>
+                                    </td>
+                                    <td>
+                                        @item.DepartureAddress
+                                    </td>
+                                    <td>
+                                        @item.TransportComp.CompanyName
+                                    </td>
                                 </tr>
-                                <tr>
-                                    <td><b>Departure Time</b></td>
-                                    <td>@Html.EditorFor(model => model.Transport.DepartureTime)</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Return Date</b></td>
-                                    <td>@Html.EditorFor(model => model.Transport.ArrivalDateTime)</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Return Time</b></td>
-                                    <td>@Html.EditorFor(model => model.Transport.ArrivalTime)</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Departure Address</b></td>
-                                    <td>@Html.EditorFor(model => model.Transport.DepartureAddress)</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Return Address</b></td>
-                                    <td>@Html.EditorFor(model => model.Transport.ArrivalAddress)</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Driver</b></td>
-                                    <td>@Html.EditorFor(model => model.Transport.Driver.FullName)</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Transport Company</b></td>
-                                    <td>@Html.DropDownList("TransportId", String.Empty)</td>
-                                </tr>
+                            }
+                        </table>
+                        }
+                    </div>
 
-                                <tr>
-                                    <td><b>Plane Ticket</b></td>
-                                    <td><input type="file" id="PlaneTicketPath" name="PlaneTicketPath" /></td>
-                                </tr>
-                            </table>
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <input type="submit" value="Create" class="btn btn-default" />
+                    <div id="tabs-2">
+                        @using (@Html.BeginForm("Create", "Transport", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            
+                            <h2>Add Transport Details</h2>
+                            
+                            <fieldset>
+                                <table>
+                                    <tr>
+                                        <td><b>Departure Date</b></td>
+                                        <td>@Html.EditorFor(model => model.Transport.DepartureDateTime)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Departure Time</b></td>
+                                        <td>@Html.EditorFor(model => model.Transport.DepartureTime)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Return Date</b></td>
+                                        <td>@Html.EditorFor(model => model.Transport.ArrivalDateTime)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Return Time</b></td>
+                                        <td>@Html.EditorFor(model => model.Transport.ArrivalTime)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Departure Address</b></td>
+                                        <td>@Html.EditorFor(model => model.Transport.DepartureAddress)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Return Address</b></td>
+                                        <td>@Html.EditorFor(model => model.Transport.ArrivalAddress)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Driver</b></td>
+                                        <td>@Html.DropDownList("driver", String.Empty)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Transport Company</b></td>
+                                        <td>@Html.DropDownList("transcomp", String.Empty)</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><b>Plane Ticket</b></td>
+                                        <td><input type="file" id="PlaneTicketPath" name="PlaneTicketPath" /></td>
+                                    </tr>
+                                </table>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Create Transport" class="btn btn-default" />
+                                    </div>
                                 </div>
-                            </div>
 
-                        </fieldset>
-                    }
+                            </fieldset>
+                        }
+                    </div>
                 </div>
+            
+                <script>
+                    $("#tabs").tabs();
+                </script> 
+            
             </div> <!--your content end-->
         </div> <!--toPopup end-->
 

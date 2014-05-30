@@ -1,0 +1,55 @@
+Probleme de rezolvat folosind comanda grep
+
+1. Sa se afiseze continutul tuturor fisierelor text din directorul dat ca parametru in linia de comanda si din subdirectoarele lui.
+
+2. Sa se afiseze numele fisierelor din linia de comanda care contin un anumit cuvant dat si el ca parametru in linia de comanda. Se cere sa se afiseze si numarul lor.
+
+3. Sa se afiseze numele tuturor fisierelor binare din directoarele date ca parametri in linia de comanda si din subdirectoarele acestora.
+
+4. Sa se afiseze numele tuturor serverelor la care este conectat fiecare utilizator dat ca parametru in linia de comanda.
+
+5. Sa se afiseze numele tuturor utilizatorilor din sistem care fac parte dintr-un anumit grup al carui identificator este dat ca parametru in linia de comanda. Sa se afiseze si numele grupului.
+
+6. Sa se afiseze numele tuturor utilizatorilor care executa o anumita comanda data ca parametru.
+
+7. Sa se afiseze numele tuturor utilizatorilor care s-au conectat la serverul curent intr-o anumita data si de la o anumita masina date ca parametri in linia de comanda.
+
+8. Pentru o lista de servere date ca parametri in linia de comanda se cere sa se afiseze daca sunt accesibile sau nu.
+
+9. Pentru anumiti utilizatori dati in linia de comanda se cere sa se afiseze daca au lucrat la o anumita data sau nu.
+
+10. Pentru a anumita lista de utilizatori, data in linia de comanda, se cere sa se afiseze daca lucreaza sau nu.
+
+11. Sa se afiseze pentru fiecare utilizator din linia de comanda, un mesaj indicand daca este permisa sau nu listarea continutului directorului gazda.
+
+12. Sa se afiseze numele tuturor utilizatorilor dati ca parametri in linia de comanda care nu s-au conectat niciodata la un anumit server dat si el ca parametru in linia de comanda.
+
+Probleme de rezolvat folosind utilitarul sed
+
+1. Se cere sa se stearga toate aparitiile cuvintelor date ca parametri din fisierul care este dat ca prim parametru.
+
+2. Sa se stearga toate liniile din fiserele date ca parametri care contin un anumit text indicat intr-un prim parametru.
+
+3. Sa se stearga dintre primele 30 de linii din fisierele date ca parametri acelea care contin textul indicat de primul parametru.
+
+4. Sa se adauge in fata fiecarei litere mici cuvintul indicat ca prim parametru. Fisierele tratate sunt ceilalti parametri din linia de comanda.
+
+5. Sa se stearga toate cifrele din fisierele date ca parametri.
+
+6. Sa se inlocuiasca toate caracterele care nu sunt litere mari cu un caracter indicat de primul parametru. Fisierele tratate sunt indicate de ceilalti parametri.
+
+7. Sa se inlocuiasca toate vocalele litere mici din fisierele date ca parametri cu litere mari corespunzatoare si viceversa.
+
+8. Sa se inlocuiasca al treilea cuvant din fiecare linie cu primul cuvant. Cuvintele sunt separate de : si contin doar litere si cifre.
+
+9. Sa se stearga cuvintele de pe pozitiile 2 si 4 din fisierele indicate ca parametri. Cuvintele contin doar litere sau cifre si sunt despartite prin spatiu.
+
+10. Sa se schimbe intre ele cuvintele de pe pozitiile 1 si 3 din fisierele date ca parametri. Cuvintele contin doar litere si sunt separate prin orice altceva.
+
+11. Sa se inlocuiasca vocalele litere mici din fisierele date ca parametri cu cuvantul VOCALA corespunzatoare, insa doar prima aparitie a vocalei in linie ( adica prima litera a, pima litera e, ... , din fiecare linie ).
+
+12. Se dau ca parametri doua cuvinte -- sa se inlocuiasca primul cuvant cu al doilea oriunde primul parametru apare ca fiind cuvantul 3 din linie. Cuvintele sunt separate prin : si contin litere, cifre sau spatii. 
+
+Observatie: Dintre problemele partii a doua (utilitarul sed) se vor alege minim trei
+pentru a primi nota maxima. Cei care doresc, pot rezolva mai multe si vor fi apreciati.
+Prima parte (grep) va fi tratata integral. Timp de lucru: doua saptamani.

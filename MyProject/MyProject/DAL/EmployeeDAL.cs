@@ -145,6 +145,11 @@ namespace MyProject.DAL
             db.MyTransport.Add(transport);
             db.SaveChanges();
         }
+        public void addEmployeeAndSaveChanges(Employee employee)
+        {
+            db.MyEmployee.Add(employee);
+            db.SaveChanges();
+        }
         public void saveChanges()
         {
             db.SaveChanges();

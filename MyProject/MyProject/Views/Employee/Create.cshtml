@@ -49,6 +49,14 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.EMailPassword, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EMailPassword)
+                @Html.ValidationMessageFor(model => model.EMailPassword)
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.PersonalID, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PersonalID)
@@ -61,6 +69,14 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.HireDate)
                 @Html.ValidationMessageFor(model => model.HireDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Headquarter, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Headquarter)
+                @Html.ValidationMessageFor(model => model.Headquarter)
             </div>
         </div>
 

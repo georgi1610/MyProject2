@@ -42,8 +42,11 @@ namespace MyProject.Controllers
         {
             ViewBag.DepartureAddressId = new SelectList(db.MyAddress, "AddressId", "CompanyName");
             ViewBag.ArrivalAddressId = new SelectList(db.MyAddress, "AddressId", "CompanyName");
-            ViewBag.DriverId = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
-            ViewBag.TransportCompId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
+            //ViewBag.DrvId = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
+            ViewBag.driver = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
+            
+//            ViewBag.TransCompId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
+            ViewBag.transcomp = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
 
             return View();
         }
@@ -52,8 +55,9 @@ namespace MyProject.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="TransportId,DepartureDateTime,DepartureTime,ArrivalDateTime,ArrivalTime,DepartureAddress,ArrivalAddress,DriverId,TransportCompId")] Transport transport)
+      //  [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include=@"TransportId,DepartureDateTime,DepartureTime,ArrivalDateTime,ArrivalTime,
+                                            DepartureAddress,ArrivalAddress")] Transport transport, int? driver, int? transcomp)
         {
             if (ModelState.IsValid)
             {
@@ -67,11 +71,11 @@ namespace MyProject.Controllers
                 if (arr != null)
                     transport.ArrivalAddress = arr;
                 */
-                var drv = ed.getEmployeeById(transport.DriverId);
+                var drv = ed.getEmployeeById(Convert.ToInt32(driver));
                 if (drv != null)
                     transport.Driver = drv;
 
-                var trans = ed.getTransportCompanyById(transport.TransportCompId);
+                var trans = ed.getTransportCompanyById(Convert.ToInt32(transcomp));//transport.TransportCompId);
                 if (trans != null)
                     transport.TransportComp = trans;
 
@@ -98,14 +102,16 @@ namespace MyProject.Controllers
                     transport.PlaneTicketPath = filePath;
                     //salvam modificarile
                     ed.saveChanges();
+                    Session["tId"] = transport.TransportId;
+                    
                 }
-                return RedirectToAction("Index");
+                return RedirectToAction("../Request/EditHR/67"); //("Index");
             }
 
             ViewBag.DepartureAddressId = new SelectList(db.MyAddress, "AddressId", "DepartureAddress", transport.DepartureAddress);
             ViewBag.ArrivalAddressId = new SelectList(db.MyAddress, "AddressId", "ArrivalAddress", transport.ArrivalAddress);
-            ViewBag.DriverId = new SelectList(db.MyEmployee, "EmployeeId", "FullName", transport.DriverId);
-            ViewBag.TransportCompId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName",transport.TransportCompId);
+            ViewBag.DrvId = new SelectList(db.MyEmployee, "EmployeeId", "FullName", transport.DriverId);
+            ViewBag.TransCompId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName",transport.TransportCompId);
 
             
             return View(transport);
