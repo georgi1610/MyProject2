@@ -41,10 +41,11 @@ namespace MyProject.Controllers
         // GET: /Employee/Create
         public ActionResult Create()
         {
-            
-            ViewBag.Sup = new SelectList(db.MyEmployee, "EmployeeId", "FirstName");
+
+            ViewBag.Sup = new SelectList(db.MyEmployee.Where(x => x.EndDate.Year == 1800), "EmployeeId", "FullName");
             ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
-            
+            ViewBag.Hq = new SelectList(db.MyAddress, "AddressId", "CompanyName");
+
          //   ViewBag.Rol = new SelectList(db.Roles, "Id", "Name");
     
             return View();
@@ -55,12 +56,13 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="EmployeeId,FirstName,MiddleName,LastName,EMail,EMailPassword,PersonalID,HireDate,Headquarter,Position,Department")] Employee employee, int? Sup, int? RoleId)
+        public ActionResult Create([Bind(Include="EmployeeId,FirstName,MiddleName,LastName,EMail,EMailPassword,PersonalID,HireDate,Position,Department")] Employee employee, int? Sup, int? RoleId, int Hq)
         {
             if (ModelState.IsValid)
             {
-                ViewBag.Sup = new SelectList(db.MyEmployee, "EmployeeId", "FirstName");
-                
+                //ViewBag.Sup = new SelectList(db.MyEmployee, "EmployeeId", "FirstName");
+                EmployeeDAL ed = new EmployeeDAL();
+                        
                 using (var trans = db.Database.BeginTransaction())
                 {
                     try
@@ -68,14 +70,21 @@ namespace MyProject.Controllers
                         //create employee
                         if (Sup != null)
                         {
-                            Employee sup = db.MyEmployee.Find(Sup);
+                            int supId = Sup.Value;
+                            Employee sup = ed.getEmployeeById(supId);// db.MyEmployee.Find(Sup);
                             employee.SuperiorEmployee = sup;
                         }
+                        if(Hq != 0)
+                        {
+                            employee.Headquarter = ed.getAddressById(Hq);
+                        }
+                        employee.EndDate = new DateTime(1800, 1, 1);
                         //db.MyEmployee.Add(employee);
                         //db.SaveChanges();
-                        EmployeeDAL ed = new EmployeeDAL();
                         ed.addEmployeeAndSaveChanges(employee);
 
+                        ed.createUserAndAddToRole(employee);
+                        /*
                         //create user for employee
                         var user = new ApplicationUser();
                         user.UserName = employee.FirstName + employee.LastName;
@@ -91,7 +100,7 @@ namespace MyProject.Controllers
                             var result = UserManager.AddToRole(user.Id, "Employee");
                             //db.SaveChanges();
                             ed.saveChanges();
-                        }
+                        }*/
                         trans.Commit();
                     }
                     catch (Exception e)
@@ -117,6 +126,12 @@ namespace MyProject.Controllers
             {
                 return HttpNotFound();
             }
+
+            ViewBag.Hq = new SelectList(db.MyAddress, "AddressId", "CompanyName");
+            //ViewBag.Sup2 = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
+            
+
+            employee.HireDate = DateTime.Now;
             return View(employee);
         }
 
@@ -125,11 +140,18 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="EmployeeId,FirstName,MiddleName,LastName,PersonalID,HireDate,Position,Department")] Employee employee)
+        public ActionResult Edit([Bind(Include="EmployeeId,FirstName,MiddleName,LastName,EMail,EMailPassword,PersonalID,HireDate,Position,Department,EndDate")] Employee employee, int Hq)//, int? Sup2)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
+
+                var headq = db.MyAddress.Find(Hq);
+                employee.Headquarter = headq;
+                employee.EndDate = new DateTime(1800,1,1);
+                /*if (Sup2 != 0)
+                    employee.SuperiorEmployee = db.MyEmployee.Find(Sup2);
+                */
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -157,7 +179,8 @@ namespace MyProject.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Employee employee = db.MyEmployee.Find(id);
-            db.MyEmployee.Remove(employee);
+            //db.MyEmployee.Remove(employee);
+            employee.EndDate = DateTime.Now;
             db.SaveChanges();
             return RedirectToAction("Index");
         }

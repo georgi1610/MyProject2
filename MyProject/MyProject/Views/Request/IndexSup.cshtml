@@ -9,6 +9,9 @@
 <table class="table">
     <tr>
         <th>
+            Status
+        </th>
+        <th>
             Applicant
         </th>
         <th>
@@ -24,9 +27,6 @@
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
-            Status
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Motivation)
         </th>
         <th></th>
@@ -34,6 +34,9 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status.StatusName)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Applicant.FullName)
         </td>
@@ -48,9 +51,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status.StatusName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Motivation)

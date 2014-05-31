@@ -11,16 +11,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Applicant.FullName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Delegation.DelegationType)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Status.StatusName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SubmitDate)
+            Applicant
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Delegation.DelegationType)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DepartureDate)
@@ -31,9 +28,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Description)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Motivation)
-        </th>
         <th></th>
     </tr>
 
@@ -41,16 +35,13 @@
     
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Status.StatusName)
+        </td>
+        <td>
             @Html.DisplayFor(model => item.Applicant.FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Delegation.DelegationType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status.StatusName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubmitDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DepartureDate)
@@ -61,16 +52,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Description)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Motivation)
-        </td>
         @{  var status = item.Status.StatusName;
         }
         
             @if (status == "New")
             {
             <td>
-                @Html.ActionLink("Edit", "EditEmp", new { id = item.RequestId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.RequestId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.RequestId })
             </td>

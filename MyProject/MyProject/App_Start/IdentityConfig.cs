@@ -61,7 +61,7 @@ ON DELETE CASCADE");
             {
                 var result = UserManager.AddToRole(user.Id, name);
             }
-
+            /*
             var employees = new List<Employee>
             {
                 new Employee { FirstName = "Carson",   LastName = "Smith", HireDate = DateTime.Parse("2010-09-01"), 
@@ -202,7 +202,7 @@ ON DELETE CASCADE");
                              Description = "my request description", Status = statuses[0], Transport = transports[2]},
 
             };
-            requests.ForEach(s => context.MyRequest.Add(s));
+            requests.ForEach(s => context.MyRequest.Add(s));*/
             context.SaveChanges();
 
 

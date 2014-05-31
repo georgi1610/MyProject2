@@ -439,6 +439,14 @@
     <Compile Include="Migrations\201405271646132_abc.Designer.cs">
       <DependentUpon>201405271646132_abc.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405310950217_abcd.cs" />
+    <Compile Include="Migrations\201405310950217_abcd.Designer.cs">
+      <DependentUpon>201405310950217_abcd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405310958010_abcde.cs" />
+    <Compile Include="Migrations\201405310958010_abcde.Designer.cs">
+      <DependentUpon>201405310958010_abcde.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -767,6 +775,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405271646132_abc.resx">
       <DependentUpon>201405271646132_abc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405310950217_abcd.resx">
+      <DependentUpon>201405310950217_abcd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405310958010_abcde.resx">
+      <DependentUpon>201405310958010_abcde.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

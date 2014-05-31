@@ -32,7 +32,7 @@ namespace MyProject.Models
 
         [Required]
         [Display(Name = "Full Name")]
-        [StringLength(150, MinimumLength = 9)]
+        [StringLength(150, MinimumLength = 6)]
         public string FullName
         {
             get
@@ -70,10 +70,9 @@ namespace MyProject.Models
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
-        [Required]
-        [StringLength(50, MinimumLength = 3)]
+             
         [Display(Name = "Headquarter")]
-        public string Headquarter { get; set; }
+        public Address Headquarter { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 3)] 

@@ -11,27 +11,11 @@
 	<hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            Name
         </dt>
         
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MiddleName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MiddleName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.FullName)
         </dd>
 
         <dt>
@@ -75,16 +59,32 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Headquarter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Headquarter.CompanyName)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.SuperiorEmployee)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.SuperiorEmployee.FirstName)
+            @Html.DisplayFor(model => model.SuperiorEmployee.FullName)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if(Model.EndDate.Year == 1800)
+    { 
+        <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
+        @Html.ActionLink("Back to List", "Index") </p>
+    }
+    @if (Model.EndDate.Year > 1800)
+    {
+        @Html.ActionLink("Back to List", "Index")
+    }
 </p>

@@ -7,6 +7,8 @@ using System.Net.Mail;
 using System.Web;
 using PdfFileWriter;
 using System.Drawing;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace MyProject.DAL
 {
@@ -106,6 +108,25 @@ namespace MyProject.DAL
         {
             var emp = db.MyEmployee.Find(Convert.ToInt32(id));//obtin obiectul employee cu id-ul obtinut mai sus
             return emp;            
+        }
+        public void createUserAndAddToRole(Employee employee)
+        {
+            //create user for employee
+            var user = new ApplicationUser();
+            user.UserName = employee.FirstName + employee.LastName;
+            user.MyEmployee = employee;
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var adminresult = UserManager.Create(user, "password");
+            //db.SaveChanges();
+            saveChanges();
+
+            //Add User to Role 'Employee'
+            if (adminresult.Succeeded)
+            {
+                var result = UserManager.AddToRole(user.Id, "Employee");
+                //db.SaveChanges();
+                saveChanges();
+            }
         }
         public Employee getHREmployee(string dep)
         {

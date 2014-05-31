@@ -18,14 +18,6 @@
         @Html.HiddenFor(model => model.RequestId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.SubmitDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SubmitDate)
-                @Html.ValidationMessageFor(model => model.SubmitDate)
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => model.DepartureDate, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.DepartureDate)

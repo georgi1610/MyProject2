@@ -12,7 +12,12 @@
 <link href="~/Content/ui-lightness/jquery-ui-1.10.4.css" rel="stylesheet">
 <script src="~/Scripts/jquery-1.10.2.js"></script>
 <script src="~/Scripts/jquery-ui-1.10.4.js"></script>
-
+<script>
+    $("#select").click(function() {
+        //this points to item
+        alert('hellllllloooooo');
+    });
+</script>
 
 <h2>Edit</h2>
 
@@ -88,17 +93,23 @@
                     </ul>
                     <div id="tabs-1">
                         <!--existing transports-->
-                        @using (@Html.BeginForm())
+                        @using (@Html.BeginForm("EditHR", "Request", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         { 
                            
                             @Html.ValidationSummary()
-                            <table border="1">
+                            <table border="1" id="mytable">
                             <tr>
                                 <th>
-                                    Select
+                                    @Html.DisplayNameFor(model => model.Transport.DepartureAddress)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Transport.TransportId)
+                                    @Html.DisplayNameFor(model => model.Transport.DepartureDateTime)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Transport.ArrivalAddress)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Transport.ArrivalDateTime)
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Transport.TransportComp)
@@ -108,18 +119,43 @@
                             {
                                 <tr>
                                     <td>
-                                        <input type="checkbox"/>
+                                        @item.DepartureAddress
                                     </td>
                                     <td>
-                                        @item.DepartureAddress
+                                        @item.DepartureDateTime
+                                    </td>
+                                    <td>
+                                        @item.ArrivalAddress
+                                    </td>
+                                    <td>
+                                        @item.ArrivalDateTime
                                     </td>
                                     <td>
                                         @item.TransportComp.CompanyName
                                     </td>
+                                    <td><a href="#" id="one">Select</a></td>
+
                                 </tr>
                             }
+                                
                         </table>
+                            <script> 
+                                tr = $('#mytable').find('tr');
+                                
+                                tr.bind('click', function (event) {
+
+                                    dep = $(this).find("td").html();
+                                    alert(dep);
+                                    
+//                                    ViewBag.dep = dep;
+                                      
+                                });
+                            </script>
+                   
+                            <input type="button" value="Select" id="select"/>
+                            
                         }
+                       
                     </div>
 
                     <div id="tabs-2">
@@ -195,7 +231,7 @@
             </div>
         </div>
     </div>
-}
+}                
 
     <div>
         @Html.ActionLink("Back to List", "IndexHR")

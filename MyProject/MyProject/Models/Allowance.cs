@@ -26,6 +26,7 @@ namespace MyProject.Models
         [Required]
         [Display(Name = "Currency")]
         [DataType(DataType.Currency)] 
+        
         public string Currency { get; set; }
 
         public virtual ICollection<Request> Requests { get; set; }

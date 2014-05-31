@@ -12,19 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            Status
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MiddleName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
+            Name
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EMail)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PersonalID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.HireDate)
@@ -44,19 +38,22 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
+            @if(item.EndDate.Year == 1800)
+            {
+                <p><img src="../images/active.jpg" />Active</p>
+            }
+            @if(item.EndDate.Year > 1800)
+            {
+                <p><img src="../images/deactivated.jpg" />
+                    Deactivated</p>
+            }
+
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.MiddleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
+            @Html.DisplayFor(modelItem => item.FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EMail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PersonalID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.HireDate)
@@ -68,12 +65,19 @@
             @Html.DisplayFor(modelItem => item.Department)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SuperiorEmployee.FirstName)
+            @Html.DisplayFor(modelItem => item.SuperiorEmployee.FullName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeId })
+            @if (item.EndDate.Year == 1800)
+            {<p>
+                @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |
+                @Html.ActionLink("Details", "Details", new { id=item.EmployeeId }) | 
+                @Html.ActionLink("Deactivate", "Delete", new { id=item.EmployeeId }) </p>
+            }
+            @if (item.EndDate.Year > 1800)
+            {
+                @Html.ActionLink("Details", "Details", new { id=item.EmployeeId })
+            }
         </td>
     </tr>
 }

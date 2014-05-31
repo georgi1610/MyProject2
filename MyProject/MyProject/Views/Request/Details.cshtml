@@ -97,6 +97,13 @@
     </dl>
 </div>
 <p>
+    @if (!(Model.Status.StatusName.Equals("New")) && !(Model.Status.StatusName.Equals("Closed")))
+    {<p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.RequestId }) |
-    @Html.ActionLink("Back to List", "IndexMyReq")
+    @Html.ActionLink("Back to List", "IndexMyReq") </p>
+    }
+    else
+    { 
+        @Html.ActionLink("Back to List", "IndexMyReq") 
+    }
 </p>

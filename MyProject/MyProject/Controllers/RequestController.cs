@@ -342,7 +342,7 @@ namespace MyProject.Controllers
 
             //ViewBag.TransCompId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
             //ViewBag.DrvId = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
-            ViewBag.driver = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
+            ViewBag.driver = new SelectList(db.MyEmployee.Where(x => x.Position.Equals("Driver")), "EmployeeId", "FullName");
             ViewBag.transcomp = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
             ViewBag.AllowanceId = new SelectList(db.Allowances, "AllowanceId", "Amount");
             
@@ -361,6 +361,7 @@ namespace MyProject.Controllers
             object o;
             bool b;
             int id = Convert.ToInt32(Session["tId"]);
+            string s = ViewBag.dep;
             if (ModelState.IsValid)
             {
                 using (var trans = db.Database.BeginTransaction())
@@ -378,9 +379,12 @@ namespace MyProject.Controllers
                         b = TempData.TryGetValue("delID", out o);
                         request.DelegationId = (Int32)o;
 
-                        request.TransportId = id;
-                        request.Transport = db.MyTransport.Find(id);
-                       
+                        if (id != 0)//daca a fost creat un nou transport
+                        {
+                            request.TransportId = id;
+                            request.Transport = db.MyTransport.Find(id);
+                        }
+
                         db.SaveChanges();
 
                         b = TempData.TryGetValue("applicant", out o);
@@ -390,7 +394,7 @@ namespace MyProject.Controllers
                         b = TempData.TryGetValue("HR", out o);
                         request.HREmployee = (Employee)o;
                         
-                        string s = ed.getStatusNameById(request.StatusId);
+                        s = ed.getStatusNameById(request.StatusId);
 
                         //send email to applicant
                         string subject = "";
