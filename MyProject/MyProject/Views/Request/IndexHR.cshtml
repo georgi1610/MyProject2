@@ -40,10 +40,9 @@
             return false;
         });
 
-        $(".viewDialog").live("click", function (e) {
-            var url = $(this).attr('href');
-            $("#dialog-view").dialog({
-                title: 'Employee Detail',
+        
+            $("#dialog-detail").dialog({
+                title: 'View Request Details',
 
                 autoOpen: false,
                 resizable: false,
@@ -75,7 +74,15 @@
             $("#dialog-edit").dialog('close');
 
         });
-    });
+
+        $(".lnkDetail").live("click", function (e) {
+            // e.preventDefault(); use this or return false
+            url = $(this).attr('href');
+            $("#dialog-detail").dialog('open');
+
+            return false;
+        });
+    
 </script>
 
 <h2>Index</h2>
@@ -83,13 +90,13 @@
 <table class="table">
     <tr>
         <th>
+            Status
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Applicant.FullName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Delegation.DelegationType)
-        </th>
-        <th>
-            Status
         </th>
         <th>
             @Html.DisplayNameFor(model => model.DepartureDate)
@@ -106,13 +113,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Status.StatusName)
+        </td>
+        <td>
             @Html.DisplayFor(model => item.Applicant.FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Delegation.DelegationType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status.StatusName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DepartureDate)
@@ -124,17 +131,39 @@
             @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditHR", new { id = item.RequestId }, new { @class = "editDialog"}) |
-            <a href="#" class="topopup">Details</a>
+            @if(item.Status.StatusName.Equals("Denied"))
+            {
+                @Html.ActionLink("Close", "CloseDeniedHR", new { id = item.RequestId })
+            }
+            else{
+                
+           @Html.ActionLink("Edit", "EditHR", new { id = item.RequestId }, new { @class = "editDialog"}) 
+            <a href="#" class="topopup">Details p</a>
             <div id="toPopup">
                 <div class="close"></div>
                 <span class="ecs_tooltip">Press Esc to close <span class="arrow"></span></span>
                 <div id="popup_content">
-                    <!--{Html.RenderPartial("../Request/_Details");}-->
                     <div>
                         @using (@Html.BeginForm())
-                        {
+                        {   
                             <h2>Request Details</h2>
+                            if (item.Status.StatusName.Equals("New"))
+                            {
+                                <img src="../../images/status_new.jpg" width="700" height="100" />
+                            }
+                            if (item.Status.StatusName.Equals("Approved"))
+                            {
+                                <img src="../../images/status_approved.jpg" width="700" height="100" />
+                            }
+                            if (item.Status.StatusName.Equals("Denied"))
+                            {
+                                <img src="../../images/status_denied.jpg" width="700" height="100" />
+                            }
+                            if (item.Status.StatusName.Equals("Closed"))
+                            {
+                                <img src="../../images/status_closed.jpg" width="700" height="100" />
+                            }
+                            
                             <fieldset>
                                 <table>
                                     <tr>
@@ -158,10 +187,6 @@
                                         <td>@Html.DisplayFor(model => item.Description)</td>
                                     </tr>
                                     <tr>
-                                        <td><b>@Html.DisplayNameFor(model => model.Status.StatusName)</b></td>
-                                        <td>@Html.DisplayFor(model => item.Status.StatusName)</td>
-                                    </tr>
-                                    <tr>
                                         <td><b>@Html.DisplayNameFor(model => model.Motivation)</b></td>
                                         <td>@Html.DisplayFor(model => item.Motivation)</td>
                                     </tr>
@@ -169,15 +194,40 @@
                                         <td><b>@Html.DisplayNameFor(model => model.Approver)</b></td>
                                         <td>@Html.DisplayFor(model => item.Approver.FullName)</td>
                                     </tr>
+                                    @if(item.TransportId != null)
+                                    {
+                                        <tr>
+                                            <td><b>Transport Company</b></td>
+                                            <td>@Html.DisplayFor(model => item.Transport.TransportComp.CompanyName)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Driver</b></td>
+                                            <td>@Html.DisplayFor(model => item.Transport.Driver.FullName)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Departure Details</b></td>
+                                            <td>@Html.DisplayFor(model => item.Transport.DepartureAddress),
+                                            @Html.DisplayFor(model => item.Transport.DepartureDateTime)</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Arrival Details</b></td>
+                                            <td>@Html.DisplayFor(model => item.Transport.ArrivalAddress),
+                                            @Html.DisplayFor(model => item.Transport.ArrivalDateTime)</td>
+                                        </tr>
+                                    }
                                 </table>
                             </fieldset>
                         }
                         </div>
                 </div> <!--your content end-->
-            </div> <!--toPopup end-->
+            </div>
 
             <div class="loader"></div>
             <div id="backgroundPopup"></div>
+            
+            @Html.ActionLink("Details", "Details", new { id = item.RequestId })
+
+            }
         </td>
     </tr>
 }

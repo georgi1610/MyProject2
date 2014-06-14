@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -41,6 +42,10 @@ namespace MyProject.Models
        // [Required]
         public virtual Country Country { get; set; }
 
+        [Required]
+        public int EmployeeId { get; set; }
+
+        //public virtual Employee employee { get; set; }
         //[Required]
      //   public virtual Transport DepartureTransport { get; set; }
 

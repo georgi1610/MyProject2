@@ -1,0 +1,19 @@
+Structura lucrarii de dipl/dis trebuie sa fie astfel:
+
+1. Introducere: enuntul temei (nu accentuati "cum", ci "ce"), motivatia alegerii temei (va intereseaza problema tratata, ati vrut sa apofundati o anumita tehnologie etc;), strunctura lucrarii (cap 1 contine... cap 2 contine....); eventual o lista a tehnologiilor folosite; daca e cazul, implementari existente pentru problema tratata (unde se folosesc sisteme similare, cu referinte)
+
+2. Cap 1: enuntul detaliat al temei; unde este cazul: diagrame use-case, fluxuri de lucru, scenarii etc. Fiecare lucrare are partea asta specifica
+
+3. Despre tehnologiile folosite: C#/ASP.NET/CEP/etc. Secvente de cod in cantitate decenta (nimeni nu vrea sa citeasca 4 pagini de cod html/css/javascript/c#); daca vreti, segmentati codul cu explicarea functionalitatilor implementate. Puteti face referire la partea de implementare: aceasta faciliate a fost utilizata la implementarea componentei X prezentata in cap 3.y
+
+3. Dupa caz: modelarea bazei de date, modelare obiectuala, modelare computationala; aici e partea lucrate de voi
+
+4. Manual de utilizare
+
+5. Concluzii si posibilitati de dezvoltare
+
+Dupa caz pot aparea si alte capitole inainte de 4
+
+Cred ca v-am trimis exemple de lucrari de diploam ca sa vedeti cum arata coperta. 
+Exista o declaratie de originalitate pe care va trebui sa o atasati lucrarii. Cand o am, v=-o trimit
+Exista o prima fisa care se pune dupa coperta, cu detalii precum: bibliografie, teme tratate, datele intalnirilor pentru discutii, semnaturi date ed voi/mine/dir de dept etc. Cand o am, o trimit; daca cineva face rost de ea mai devreme, dati-o pe grup. Idem la punctul anterior. 

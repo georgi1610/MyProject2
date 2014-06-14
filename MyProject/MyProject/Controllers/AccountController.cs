@@ -48,12 +48,29 @@ namespace MyProject.Controllers
                 var user = await UserManager.FindAsync(model.UserName, model.Password);
                 if (user != null)
                 {
-                    await SignInAsync(user, model.RememberMe);
-                    return RedirectToLocal(returnUrl);
+                    if (model.UserName == "Admin")//daca e Admin, se logheaza direct
+                    {
+                        await SignInAsync(user, model.RememberMe);
+                        return RedirectToLocal(returnUrl);
+                    }
+                    if (model.UserName != "Admin")//daca e employee
+                    {
+                        ApplicationDbContext db = new ApplicationDbContext();
+                        var emp = (from e in db.MyEmployee
+                                   where e.EmployeeId == user.EmployeeId
+                                   select e).First();
+                        if (emp.EndDate.Equals(new DateTime(1800, 1, 1)))//daca e activ
+                        {
+                            await SignInAsync(user, model.RememberMe);
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else //daca nu mai e activ
+                            ModelState.AddModelError("", "Invalid username or password, or account not active.");
+                    }
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Invalid username or password, or account not active.");
                 }
             }
 

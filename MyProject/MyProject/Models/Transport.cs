@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyProject.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,17 +19,20 @@ namespace MyProject.Models
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [MyDepDateValidator()]
         [Display(Name = "Departure Date")]
         public DateTime DepartureDateTime { get; set; }
 
         [Required]
         [DataType(DataType.Time)]
+       
         [Display(Name = "Departure Time")]
         public DateTime DepartureTime { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [MyRetDateValidator(compareWith:"DepartureDateTime")]
         [Display(Name = "Arrival Date")]
         public DateTime ArrivalDateTime { get; set; }
 
@@ -42,6 +46,7 @@ namespace MyProject.Models
         
         [Required]
         [Display(Name = "Full Departure Address")]
+        [StringLength(50, MinimumLength = 3)] 
         public string DepartureAddress { get; set; }
         
         //[Required]
@@ -49,6 +54,7 @@ namespace MyProject.Models
         
         [Required]
         [Display(Name = "Full Arrival Address")]
+        [StringLength(50, MinimumLength = 3)] 
         public string ArrivalAddress { get; set; }
         
         [Display(Name="Transport Company")]
@@ -56,6 +62,7 @@ namespace MyProject.Models
         public int TransportCompId { get; set; }
 
         [Display(Name = "Plane Ticket")]
+        [StringLength(50, MinimumLength = 3)] 
         public string PlaneTicketPath { get; set; }
 
         public int DriverId { get; set; }

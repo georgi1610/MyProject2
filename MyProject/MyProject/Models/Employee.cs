@@ -70,9 +70,11 @@ namespace MyProject.Models
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
-             
+        [Required]
         [Display(Name = "Headquarter")]
         public Address Headquarter { get; set; }
+
+        public int Headquarter_Id { get; set; }
 
         [Required]
         [StringLength(50, MinimumLength = 3)] 

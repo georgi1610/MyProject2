@@ -42,7 +42,8 @@ namespace MyProject.Controllers
         public ActionResult Create()
         {
 
-            ViewBag.Sup = new SelectList(db.MyEmployee.Where(x => x.EndDate.Year == 1800), "EmployeeId", "FullName");
+            ViewBag.Sup = new SelectList(db.MyEmployee.Where(x => x.EndDate.Year == 1800)
+                .Where(x => x.Position != "Driver"), "EmployeeId", "FullName");
             ViewBag.RoleId = new SelectList(db.Roles, "Id", "Name");
             ViewBag.Hq = new SelectList(db.MyAddress, "AddressId", "CompanyName");
 
@@ -127,7 +128,7 @@ namespace MyProject.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Hq = new SelectList(db.MyAddress, "AddressId", "CompanyName");
+            ViewBag.Headquarter_AddressId = new SelectList(db.MyAddress, "AddressId", "CompanyName");
             //ViewBag.Sup2 = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
             
 
@@ -140,21 +141,22 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="EmployeeId,FirstName,MiddleName,LastName,EMail,EMailPassword,PersonalID,HireDate,Position,Department,EndDate")] Employee employee, int Hq)//, int? Sup2)
+        public ActionResult Edit([Bind(Include=@"EmployeeId,FirstName,MiddleName,LastName,EMail,EMailPassword,
+                    PersonalID,HireDate,Position,Department,EndDate")] 
+                    Employee employee, int Headquarter_AddressId)//, int? Sup2)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
 
-                var headq = db.MyAddress.Find(Hq);
+                var headq = db.MyAddress.Find(Headquarter_AddressId);
                 employee.Headquarter = headq;
                 employee.EndDate = new DateTime(1800,1,1);
-                /*if (Sup2 != 0)
-                    employee.SuperiorEmployee = db.MyEmployee.Find(Sup2);
-                */
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
             return View(employee);
         }
 
@@ -180,8 +182,27 @@ namespace MyProject.Controllers
         {
             Employee employee = db.MyEmployee.Find(id);
             //db.MyEmployee.Remove(employee);
-            employee.EndDate = DateTime.Now;
-            db.SaveChanges();
+//            employee.EndDate = DateTime.Now;
+//            db.SaveChanges();
+
+            //reset password
+            var userId = (from u in db.Users
+                      where u.UserName.Equals(employee.FirstName + employee.LastName)
+                      select u).First();//iau id-ul angajatului cu nume user = employee prenume+nume
+            
+          //  UserManager<IdentityUser> userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+/*            userManager.RemovePassword(userId.ToString());
+            userManager.AddPassword(userId.ToString(), "parola123");
+            */
+            //geo reset pass admin
+            UserManager<IdentityUser> userManager =
+                new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+            
+            var myuser = userManager.FindById(userId.Id.ToString());
+            userManager.RemovePassword("587a1dce-7293-4464-8150-0cacba352055");
+            userManager.AddPassword("587a1dce-7293-4464-8150-0cacba352055", "parola123");
+
+
             return RedirectToAction("Index");
         }
 

@@ -62,15 +62,6 @@ namespace MyProject.Controllers
             if (ModelState.IsValid)
             {
                 EmployeeDAL ed = new EmployeeDAL();
-                /*
-                var dep = ed.getAddressById(transport.DepartureAddressId); 
-                if (dep != null)
-                    transport.DepartureAddress = dep;
-
-                var arr = ed.getAddressById(transport.ArrivalAddressId);
-                if (arr != null)
-                    transport.ArrivalAddress = arr;
-                */
                 var drv = ed.getEmployeeById(Convert.ToInt32(driver));
                 if (drv != null)
                     transport.Driver = drv;
@@ -80,32 +71,32 @@ namespace MyProject.Controllers
                     transport.TransportComp = trans;
 
                 ed.addTransportAndSaveChanges(transport);
-                //db.MyTransport.Add(transport);
-                //db.SaveChanges();
-                //return RedirectToAction("../Request/EditHR/59");//sa duca inapoi la ../Request/EditHR/59????
-
-                string path = Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "Images");
-                string photoPath = null;
+               
+                string path = Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "Tickets");
+                string ticketPath = null;
                 HttpPostedFileBase file = null;
                 if (Request.Files.Count > 0)
                 {// preluam fisierul din lista de fisiere
                     file = Request.Files[0];
                     // construim path relativ la poza
-                    photoPath = Path.Combine(path, file.FileName);
+                    ticketPath = Path.Combine(path, file.FileName);
                     // generam numele fisierului de pe disk unde vom salva poza
                     string filePath = transport.TransportId + Path.GetExtension(file.FileName);//path - ul care va fi folosit pentru afisarea imaginii
-                    //c:\...\images\1.jpg
-                    string newPhotoPath = Path.Combine(path, transport.TransportId + Path.GetExtension(file.FileName));
-                    //salvam fisierul in images
-                    file.SaveAs(newPhotoPath);
-                    //salvam calea catre poza in baza de date
+                    //c:\...\tickets\1.pdf
+                    string newTicketPath = Path.Combine(path, transport.TransportId + Path.GetExtension(file.FileName));
+                    //salvam fisierul in tickets
+                    file.SaveAs(newTicketPath);
+                    //salvam calea catre pdf in baza de date
                     transport.PlaneTicketPath = filePath;
                     //salvam modificarile
                     ed.saveChanges();
                     Session["tId"] = transport.TransportId;
                     
                 }
-                return RedirectToAction("../Request/EditHR/67"); //("Index");
+                
+                int id = Convert.ToInt32(Session["reqId"]);
+                string retUrl = "../Request/EditHR/"+id.ToString();
+                return RedirectToAction(retUrl);
             }
 
             ViewBag.DepartureAddressId = new SelectList(db.MyAddress, "AddressId", "DepartureAddress", transport.DepartureAddress);

@@ -24,7 +24,7 @@
 	    z-index: 2;
 	}
 	div.loader {
-	    background: url("../img/loading.gif") no-repeat scroll 0 0 transparent;
+	    background: url("../images/loading.gif") no-repeat scroll 0 0 transparent;
 	    height: 32px;
 	    width: 32px;
 	    display: none;
@@ -35,7 +35,6 @@
 	    margin-left: -10px;
 	}
 	div.close {
-	    background: url("../img/closebox.png") no-repeat scroll 0 0 transparent;
 	    cursor: pointer;
 	    height: 30px;
 	    position: absolute;

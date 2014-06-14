@@ -58,8 +58,8 @@
             @if (status == "New")
             {
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.RequestId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.RequestId })
+                @Html.ActionLink("Details", "Details", new { id = item.RequestId }) 
+               <!--Html.ActionLink("Delete", "Delete", new { id = item.RequestId })-->
             </td>
             }
             @if (status != "New")

@@ -73,7 +73,16 @@
         <dd>
             @Html.DisplayFor(model => model.SuperiorEmployee.FullName)
         </dd>
+        @if (Model.EndDate.Year > 1800)
+        {
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        }
     </dl>
 </div>
 <p>

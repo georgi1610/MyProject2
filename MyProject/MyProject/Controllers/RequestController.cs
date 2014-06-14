@@ -120,7 +120,10 @@ namespace MyProject.Controllers
             ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName");
             ViewBag.DepartureAddressId = new SelectList(db.MyAddress, "AddressId", "CompanyName");
             ViewBag.ReturnAddressId = new SelectList(db.MyAddress, "AddressId", "CompanyName");
-            ViewBag.StandInId = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
+            ViewBag.StandInId = new SelectList(
+                db.MyEmployee.Where(x => x.EndDate.Equals(new DateTime(1800,1,1))).
+                Where(x => x.Position != "Driver"),
+                "EmployeeId", "FullName");
 
             return View();
         }
@@ -338,15 +341,30 @@ namespace MyProject.Controllers
             TempData.Add("status", request.StatusId);
 
             ViewBag.DelegationId = new SelectList(db.MyDelegation, "DelegationId", "DelegationType");//, request.DelegationId);
-            ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName");//, request.StatusId);
+            ViewBag.StatusId = new SelectList(db.MyStatus
+                .Where(x => x.StatusName.Equals("Closed"))
+                , "StatusId", "StatusName");//, request.StatusId);
 
             //ViewBag.TransCompId = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
             //ViewBag.DrvId = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
             ViewBag.driver = new SelectList(db.MyEmployee.Where(x => x.Position.Equals("Driver")), "EmployeeId", "FullName");
             ViewBag.transcomp = new SelectList(db.TransportCompanies, "TransportCompanyId", "CompanyName");
             ViewBag.AllowanceId = new SelectList(db.Allowances, "AllowanceId", "Amount");
+            ViewBag.TransportId = new SelectList(db.MyTransport, "TransportId", "TransportId");
             
             ViewBag.Transports = db.MyTransport.ToList();
+
+            int idd = Convert.ToInt32(Session["tId"]);
+            if (idd != 0)
+            {
+                Transport t = db.MyTransport.Find(idd);
+                string st = t.DepartureAddress + "; " + t.DepartureDateTime + "; " + t.Driver.FullName;
+                ViewBag.stv = st;
+            }
+            ViewBag.transp = Convert.ToInt32(Session["tId"]);
+
+            Session["reqId"] = request.RequestId;
+            
 
             return View(request);
         }
@@ -355,7 +373,8 @@ namespace MyProject.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditHR([Bind(Include = "RequestId,StatusId,TransportCompId,AllowanceId")] Request request)
+        public ActionResult EditHR([Bind(Include = "RequestId,StatusId,TransportCompId,AllowanceId")] Request request,
+            int? transportId)
         {
             EmployeeDAL ed = new EmployeeDAL();
             object o;
@@ -384,7 +403,13 @@ namespace MyProject.Controllers
                             request.TransportId = id;
                             request.Transport = db.MyTransport.Find(id);
                         }
-
+                        if (transportId != 0)//transport din dropdownlist
+                        {
+                            request.TransportId = transportId;
+                            request.Transport = db.MyTransport.Find(transportId);
+                        }
+                    //    string sId = Request["myP"].ToString();
+                        
                         db.SaveChanges();
 
                         b = TempData.TryGetValue("applicant", out o);
@@ -396,31 +421,36 @@ namespace MyProject.Controllers
                         
                         s = ed.getStatusNameById(request.StatusId);
 
-                        //send email to applicant
                         string subject = "";
                         string body = "";
-                        if (s.Equals("Closed"))
+                        if (s.Equals("Closed") && transportId != null)
                         {
+                            //send email to applicant with the transport details 
                             subject = "delegation request updated";
                             body = "transport details have been added, view here your request status http://localhost:5281/Request/IndexMyReq";
                             ed.sendEmail(request.Applicant, request.HREmployee, subject, body);
-                        }
 
-                        //send email to approver
-                        if (s.Equals("Closed"))
-                        {
+                            //send email to approver with information about added transport details
                             subject = "delegation request updated";
                             body = "transport details have been added for employee" + request.Applicant.FullName;
                             ed.sendEmail(request.Approver, request.HREmployee, subject, body);
                         }
+
+                        if (s.Equals("Closed (Denied)") && transportId == null)
+                        {
+                            //send email to approver with info about closed denied request
+                            subject = "denied delegation request closed";
+                            body = "denied request was closed for employee" + request.Applicant.FullName;
+                            ed.sendEmail(request.Approver, request.HREmployee, subject, body);
+
+                            //send email to applicant with info about closed denied request
+                            subject = "denied delegation request closed";
+                            body = "denied request was closed for employee" + request.Applicant.FullName;
+                            ed.sendEmail(request.Approver, request.HREmployee, subject, body);
+                        }
+
                         TempData.Clear();
                         trans.Commit();
-                    }
-                    catch(OptimisticConcurrencyException)
-                    {
-                        
-                        //db.Refresh(RefreshMode.ClientWins, db.MyTransport);
-                        db.SaveChanges();
                     }
                     catch (Exception e)
                     {
@@ -467,7 +497,8 @@ namespace MyProject.Controllers
             ViewBag.Description = new SelectList(db.MyRequest, "RequestId", "Description", request.Description);
 
             ViewBag.DelegationId = new SelectList(db.MyDelegation, "DelegationId", "DelegationType", request.DelegationId);
-            ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName", request.StatusId);
+            ViewBag.StatusId = new SelectList(db.MyStatus.Where(x => x.StatusId != 1), 
+                "StatusId", "StatusName", request.StatusId);
 
             return View(request);
         }
@@ -590,6 +621,20 @@ namespace MyProject.Controllers
             db.MyRequest.Remove(request);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        
+        public ActionResult CloseDeniedHR(int id)
+        {
+            Request request = db.MyRequest.Find(id);
+            var status = (from s in db.MyStatus
+                          where s.StatusName.Equals("Closed (Denied)")
+                          select s).First();
+            request.Status = db.MyStatus.Find(status.StatusId);
+            request.StatusId = status.StatusId;
+            //db.MyRequest.Remove(request);
+            db.SaveChanges();
+            return RedirectToAction("IndexHR");
         }
 
         protected override void Dispose(bool disposing)

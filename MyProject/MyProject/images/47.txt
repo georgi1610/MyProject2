@@ -1,0 +1,76 @@
+    <add name="DefaultConnection" connectionString="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\aspnet-DelegationRequestsApp-20140217100052.mdf;Initial Catalog=aspnet-DelegationRequestsApp-20140217100052;Integrated Security=True"
+      providerName="System.Data.SqlClient" />
+
+
+            //var adminemployee = new employee()
+            //{
+            //    firstname = "john",
+            //    lastname = "smith",
+            //    personalid = "1234567890123",
+            //    hiredate = datetime.now,
+            //    position = "administrator",
+            //    department = "it"
+            //};
+
+   <add name="MyConnection" connectionString="Data Source=GEORGI-PC\SQLEXPRESS;Initial Catalog=DelegDB;Integrated Security=True" providerName="System.Data.SqlClient" />
+
+original este
+    <add name="DefaultConnection" 
+      connectionString="Data Source=(LocalDb)\v11.0;AttachDbFilename=|DataDirectory|\aspnet-test2-20140221094531.mdf;Initial Catalog=aspnet-test2-20140221094531;Integrated Security=True"
+      providerName="System.Data.SqlClient" />
+
+<!--
+        <div class="form-group">
+                @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+    -->
+
+<h4>Select Role for User</h4>
+        <hr />
+        @Html.DropDownList("Role", "No Roles")
+
+
+using (var trans = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        db.MyEmployee.Add(employee);
+                        db.SaveChanges();
+
+                        //create user pt employee
+                        var user = new ApplicationUser();
+                        user.UserName = employee.FirstName + employee.LastName;
+                        user.MyEmployee = employee;
+                        var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                        var adminresult = UserManager.Create(user, "password");
+                        db.SaveChanges();
+
+                        //Add User to Role 'Roles'
+                        if (adminresult.Succeeded)
+                        {
+                            var result = UserManager.AddToRole(user.Id, "Employee");//Role);
+                            db.SaveChanges();
+                        }
+                        trans.Commit();
+                    }
+                    catch (Exception e)
+                    {
+
+                        trans.Rollback();
+                    }
+                }

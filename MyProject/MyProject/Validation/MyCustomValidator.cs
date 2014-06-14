@@ -48,6 +48,26 @@ namespace MyProject.Validation
         }
     }
 
+    public class MyDepDateValidator : ValidationAttribute
+    {
+        public MyDepDateValidator()
+        {
+        }
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (value != null)
+            {
+                var depdate = (DateTime)value;
+                if (depdate < DateTime.Now)
+                {
+                    var errormessage = "Departure Date must be in the future, after current date.";
+                    return new ValidationResult(errormessage);
+                }
+            }
+            return ValidationResult.Success;
+        }
+    }
+
     public class MyReturnDateValidator : ValidationAttribute
     {
         private string propertyToCompare;
@@ -57,6 +77,32 @@ namespace MyProject.Validation
             propertyToCompare = compareWith;
         }
         
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            var basePropertyInfo = validationContext.ObjectType.GetProperty(propertyToCompare);
+            var depDate = (DateTime)basePropertyInfo.GetValue(validationContext.ObjectInstance, null);
+            if (value != null)
+            {
+                var retDate = (DateTime)value;
+                if (retDate < depDate)
+                {
+                    var errormessage = "Return Date must be after Departure Date.";
+                    return new ValidationResult(errormessage);
+                }
+            }
+            return ValidationResult.Success;
+        }
+    }
+
+    public class MyRetDateValidator : ValidationAttribute
+    {
+        private string propertyToCompare;
+
+        public MyRetDateValidator(string compareWith = "")
+        {
+            propertyToCompare = compareWith;
+        }
+
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var basePropertyInfo = validationContext.ObjectType.GetProperty(propertyToCompare);

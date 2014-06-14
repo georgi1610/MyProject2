@@ -77,6 +77,15 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.TransportId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <p id="myP"></p>
+            </div>
+        </div>
+
+       
+
 
         <!--Html.ActionLink("Add Transport Details", "../Transport/Create") -->
         <br/>
@@ -100,6 +109,8 @@
                             <table border="1" id="mytable">
                             <tr>
                                 <th>
+                                </th>
+                                <th>
                                     @Html.DisplayNameFor(model => model.Transport.DepartureAddress)
                                 </th>
                                 <th>
@@ -119,6 +130,9 @@
                             {
                                 <tr>
                                     <td>
+                                        @item.TransportId
+                                    </td>
+                                    <td>
                                         @item.DepartureAddress
                                     </td>
                                     <td>
@@ -134,26 +148,28 @@
                                         @item.TransportComp.CompanyName
                                     </td>
                                     <td><a href="#" id="one">Select</a></td>
-
+                                   
                                 </tr>
                             }
                                 
                         </table>
+                        
                             <script> 
+                                
                                 tr = $('#mytable').find('tr');
                                 
                                 tr.bind('click', function (event) {
 
                                     dep = $(this).find("td").html();
-                                    alert(dep);
-                                    
-//                                    ViewBag.dep = dep;
+                                    //alert(dep);
+                                    //Session["k"] = dep;
+                                    $("#myP").text(dep);
+                                                                   
                                       
                                 });
                             </script>
-                   
-                            <input type="button" value="Select" id="select"/>
-                            
+                             
+                               
                         }
                        
                     </div>
@@ -225,12 +241,15 @@
         <div class="loader"></div>
         <div id="backgroundPopup"></div>
 
-       <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        <p id="trans">Transport created: @ViewBag.stv</p>
+           
+  
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
             </div>
-        </div>
-    </div>
+</div>
 }                
 
     <div>

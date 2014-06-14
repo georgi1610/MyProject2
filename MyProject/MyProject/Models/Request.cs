@@ -33,10 +33,12 @@ namespace MyProject.Models
         public int StatusId { get; set; }
 
         [Display(Name = "Motivation")]
+        [StringLength(50, MinimumLength = 3)] 
         public string Motivation { get; set; }
 
         //[Required]
         [Display(Name = "Description")]
+        [StringLength(50, MinimumLength = 3)] 
         public string Description { get; set; }
 
         [Required]
