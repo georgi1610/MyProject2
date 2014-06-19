@@ -64,8 +64,7 @@ namespace MyProject.Models
         [Display(Name="Hire Date")]
         [MyHireDateValidator()]
         public DateTime HireDate { get; set; }
-
-        
+       
         [DataType(DataType.Date)]
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }

@@ -39,7 +39,7 @@ namespace MyProject.Models
         [Required]
         public int CountryId { get; set; }
 
-       // [Required]
+        //[Required]
         public virtual Country Country { get; set; }
 
         [Required]

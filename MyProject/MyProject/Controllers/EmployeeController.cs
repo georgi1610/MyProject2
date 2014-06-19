@@ -72,19 +72,19 @@ namespace MyProject.Controllers
                         if (Sup != null)
                         {
                             int supId = Sup.Value;
-                            Employee sup = ed.getEmployeeById(supId);// db.MyEmployee.Find(Sup);
+                            Employee sup = ed.GetEmployeeById(supId);// db.MyEmployee.Find(Sup);
                             employee.SuperiorEmployee = sup;
                         }
                         if(Hq != 0)
                         {
-                            employee.Headquarter = ed.getAddressById(Hq);
+                            employee.Headquarter = ed.GetAddressById(Hq);
                         }
                         employee.EndDate = new DateTime(1800, 1, 1);
                         //db.MyEmployee.Add(employee);
                         //db.SaveChanges();
-                        ed.addEmployeeAndSaveChanges(employee);
+                        ed.AddEmployeeAndSaveChanges(employee);
 
-                        ed.createUserAndAddToRole(employee);
+                        ed.CreateUserAndAddToRole(employee);
                         /*
                         //create user for employee
                         var user = new ApplicationUser();
@@ -182,8 +182,8 @@ namespace MyProject.Controllers
         {
             Employee employee = db.MyEmployee.Find(id);
             //db.MyEmployee.Remove(employee);
-//            employee.EndDate = DateTime.Now;
-//            db.SaveChanges();
+            employee.EndDate = DateTime.Now;
+            db.SaveChanges();
 
             //reset password
             var userId = (from u in db.Users
@@ -195,13 +195,13 @@ namespace MyProject.Controllers
             userManager.AddPassword(userId.ToString(), "parola123");
             */
             //geo reset pass admin
-            UserManager<IdentityUser> userManager =
+           /* UserManager<IdentityUser> userManager =
                 new UserManager<IdentityUser>(new UserStore<IdentityUser>());
             
             var myuser = userManager.FindById(userId.Id.ToString());
             userManager.RemovePassword("587a1dce-7293-4464-8150-0cacba352055");
             userManager.AddPassword("587a1dce-7293-4464-8150-0cacba352055", "parola123");
-
+            */
 
             return RedirectToAction("Index");
         }

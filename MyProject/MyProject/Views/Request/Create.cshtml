@@ -4,7 +4,7 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<h2>Create new request</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,6 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Request</h4>
         <hr />
         @Html.ValidationSummary(true)
 
@@ -71,14 +70,14 @@
                 @Html.ValidationMessageFor(model => model.ReturnAddress.AddressId)
             </div>
         </div>
-    
-        <h4>Select Stand In Employee</h4>
-        <hr />
-        @Html.DropDownList("StandInId", "No Stand In")
 
-
-       
-
+        <div class="form-group">
+            @Html.LabelFor(model => model.StandIn.FullName, "Stand In Employee", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("StandInId", String.Empty)
+            </div>
+        </div>
+   
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

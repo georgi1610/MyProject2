@@ -4,15 +4,15 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Statuses</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add New Status", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StatusName)
+            Status
         </th>
         <th></th>
     </tr>
@@ -20,6 +20,23 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @if (item.StatusName.Equals("New"))
+            {
+                <img src="../images/new.jpg" />
+            }
+            @if (item.StatusName.Equals("Approved"))
+            {
+                <img src="../images/active.jpg" />
+            }
+            @if (item.StatusName.Equals("Closed (Denied)") ||
+                 item.StatusName.Equals("Denied"))
+            {
+                <img src="../images/deactivated.jpg" />
+            }
+            @if (item.StatusName.Equals("Closed"))
+            {
+                <img src="../images/closed_approved.jpg" />
+            }
             @Html.DisplayFor(modelItem => item.StatusName)
         </td>
         <td>

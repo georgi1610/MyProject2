@@ -386,7 +386,7 @@ hr {
   margin-top: 20px;
   margin-bottom: 20px;
   border: 0;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid #333333;
 }
 
 .sr-only {
@@ -1427,7 +1427,7 @@ th {
   padding: 8px;
   line-height: 1.428571429;
   vertical-align: top;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #333333;
 }
 
 .table thead > tr > th {
@@ -4934,7 +4934,9 @@ a.list-group-item.active > .badge,
   font-weight: 200;
   line-height: 2.1428571435;
   color: inherit;
-  background-color: #D8CEF6;
+  background-color: #cee1ed;
+  background-image:  url(../images/Airplane.jpg);
+  background-size: 1170px 238px;
 }
 
 .jumbotron h1 {
@@ -5407,7 +5409,7 @@ a.list-group-item:focus {
 .panel-footer {
   padding: 10px 15px;
   background-color: #f5f5f5;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid #333333;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
 }

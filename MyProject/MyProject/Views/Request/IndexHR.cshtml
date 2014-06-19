@@ -85,7 +85,7 @@
     
 </script>
 
-<h2>Index</h2>
+<h2>Requests</h2>
 
 <table class="table">
     <tr>
@@ -93,7 +93,10 @@
             Status
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Applicant.FullName)
+            Applicant
+        </th>
+        <th>
+            Approver
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Delegation.DelegationType)
@@ -119,6 +122,9 @@
             @Html.DisplayFor(model => item.Applicant.FullName)
         </td>
         <td>
+            @Html.DisplayFor(model => item.Approver.FullName)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Delegation.DelegationType)
         </td>
         <td>
@@ -138,7 +144,7 @@
             else{
                 
            @Html.ActionLink("Edit", "EditHR", new { id = item.RequestId }, new { @class = "editDialog"}) 
-            <a href="#" class="topopup">Details p</a>
+          <!--  <a href="#" class="topopup">Details p</a>-->
             <div id="toPopup">
                 <div class="close"></div>
                 <span class="ecs_tooltip">Press Esc to close <span class="arrow"></span></span>

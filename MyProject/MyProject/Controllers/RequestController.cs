@@ -49,19 +49,26 @@ namespace MyProject.Controllers
         }
 
         // GET: /Request/IndexMyReq
+        [Authorize(Roles = "Employee")]
+        public ActionResult IndexAll()//toate cererile
+        {
+            var myrequest = db.MyRequest.Include(r => r.Delegation).Include(r => r.Status);
+            return View(myrequest);
+        }
+
+        // GET: /Request/IndexMyReq
         [Authorize(Roles="Employee")]
         public ActionResult IndexMyReq()//cererile user-ului logat
         {
             var myrequest = db.MyRequest.Include(r => r.Delegation).Include(r => r.Status);
 
-            var loggedUser = User.Identity;
-            var id = (from u in db.Users
-                      where u.UserName.Equals(loggedUser.Name)
-                      select u.EmployeeId).First();//iau id-ul angajatului logat cu nume user = loggedUser.Name
-            var req = (from r in db.MyRequest
-                       where r.Applicant.EmployeeId == id
-                       select r).ToList();
-            return View(req.ToList());
+            EmployeeDAL ed = new EmployeeDAL();
+           
+            Int32 employeeId = ed.GetEmployeeIdByLoggedUser(User.Identity.Name);
+            
+            List<Request> requests = ed.GetRequestsListByEmployeeId(employeeId);
+           
+            return View(requests);
         }
 
         // GET: /Request/IndexHR
@@ -129,11 +136,11 @@ namespace MyProject.Controllers
         }
 
         // POST: /Request/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RequestId,DepartureDate,ReturnDate,StatusId,Description,DelegationId,DepartureAddressId,ReturnAddressId")] Request request,int? StandInId,int? TransportId)
+        public ActionResult Create([Bind(Include = @"RequestId,DepartureDate,ReturnDate,StatusId,
+                                    Description,DelegationId,DepartureAddressId,ReturnAddressId")] Request request,
+                                    int? StandInId,int? TransportId)
         {
             if (ModelState.IsValid)
             {
@@ -143,42 +150,41 @@ namespace MyProject.Controllers
                     {
                         EmployeeDAL ed = new EmployeeDAL();
 
-                        request.SubmitDate = DateTime.Now;//set submit date to current date
+                        request.SubmitDate = DateTime.Now;
 
-                        var loggedUser = User.Identity;//user logat
-                        var id = (from u in db.Users
-                                  where u.UserName.Equals(loggedUser.Name)
-                                  select u.EmployeeId).First();//iau id-ul angajatului cu nume user = loggedUser.Name
+                        var loggedUser = User.Identity;
 
-                        var emp = ed.getEmployeeById(Convert.ToInt32(id)); //obtin obiectul employee cu id-ul obtinut mai sus
+                        var id = ed.GetEmployeeIdByLoggedUser(loggedUser.Name);
+                        
+                        var emp = ed.GetEmployeeById(Convert.ToInt32(id));
                         if(emp!=null)
-                            request.Applicant = emp;//setez applicant la request in cerere
+                            request.Applicant = emp;
 
                         var sup = emp.SuperiorEmployee;
-                        if (sup != null)//are superior, seteaza si id superior in cerere
+                        if (sup != null)
                             request.Approver = sup;
-                        
-
-                        var hr = ed.getHREmployee("Human Resources");
+ 
+                        var hr = ed.GetHREmployee("Human Resources");
                         if (hr != null)
                             request.HREmployee = hr;
 
-                        var dep = ed.getAddressById(request.DepartureAddressId);
+                        var dep = ed.GetAddressById(request.DepartureAddressId);
                         if (dep != null)
                             request.DepartureAddress = dep;
 
-                        var ret = ed.getAddressById(request.ReturnAddressId);
+                        var ret = ed.GetAddressById(request.ReturnAddressId);
                         if (ret != null)
                             request.ReturnAddress = ret;
 
-                        var stdin = ed.getStandInEmployeeById(StandInId.Value);
+                        var stdin = ed.GetStandInEmployeeById(StandInId.Value);
                         if (stdin != null)
                             request.StandIn = stdin;
 
-                        ed.addRequestAndSaveChanges(request);
+                        ed.AddRequestAndSaveChanges(request);
                                                 
-                        string subject = "delegation request";
-                        string body = "please approve my request by entering this link http://localhost:5281/Request/IndexSup";
+                        string subject = "Delegation Request";
+                        string body = "Please approve my request by entering the following link http://localhost:5281/Request/IndexSup";
+                        body += " \n " + request.Applicant.FullName;
 
                         ed.sendEmail(request.Approver, request.Applicant, subject, body);
 
@@ -189,7 +195,6 @@ namespace MyProject.Controllers
                         trans.Rollback();
                     }
                 }
-               
                 return RedirectToAction("IndexMyReq");
             }
 
@@ -197,7 +202,7 @@ namespace MyProject.Controllers
             ViewBag.StatusId = new SelectList(db.MyStatus, "StatusId", "StatusName", request.StatusId);
             ViewBag.DepartureAddressId = new SelectList(db.MyAddress, "AddressId", "CompanyName", request.DepartureAddressId);
             ViewBag.ReturnAddressId = new SelectList(db.MyAddress, "AddressId", "CompanyName", request.ReturnAddressId);
-            ViewBag.StandInId = new SelectList(db.MyEmployee, "EmployeeId", "FullName");//, request.StandIn.EmployeeId);
+            ViewBag.StandInId = new SelectList(db.MyEmployee, "EmployeeId", "FullName");
   
 
             return View(request);
@@ -419,11 +424,11 @@ namespace MyProject.Controllers
                         b = TempData.TryGetValue("HR", out o);
                         request.HREmployee = (Employee)o;
                         
-                        s = ed.getStatusNameById(request.StatusId);
+                        s = ed.GetStatusNameById(request.StatusId);
 
                         string subject = "";
                         string body = "";
-                        if (s.Equals("Closed") && transportId != null)
+                        if (s.Equals("Closed") && transportId != 0)
                         {
                             //send email to applicant with the transport details 
                             subject = "delegation request updated";
@@ -436,7 +441,7 @@ namespace MyProject.Controllers
                             ed.sendEmail(request.Approver, request.HREmployee, subject, body);
                         }
 
-                        if (s.Equals("Closed (Denied)") && transportId == null)
+                        if (s.Equals("Closed (Denied)") && transportId == 0)
                         {
                             //send email to approver with info about closed denied request
                             subject = "denied delegation request closed";
@@ -545,7 +550,7 @@ namespace MyProject.Controllers
 
                         //b = TempData.TryGetValue("status", out o);
                         //request.StatusId = (Int32)o;
-                        string s = ed.getStatusNameById(request.StatusId);
+                        string s = ed.GetStatusNameById(request.StatusId);
 
 
                         //send email to applicant

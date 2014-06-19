@@ -275,10 +275,6 @@
     <Compile Include="Migrations\201405010945501_12345.Designer.cs">
       <DependentUpon>201405010945501_12345.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201405011008012_123456.cs" />
-    <Compile Include="Migrations\201405011008012_123456.Designer.cs">
-      <DependentUpon>201405011008012_123456.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201405011010191_1234567.cs" />
     <Compile Include="Migrations\201405011010191_1234567.Designer.cs">
       <DependentUpon>201405011010191_1234567.cs</DependentUpon>
@@ -467,6 +463,14 @@
     <Compile Include="Migrations\201406131903314_m11111111.Designer.cs">
       <DependentUpon>201406131903314_m11111111.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201406172057066_123456.cs" />
+    <Compile Include="Migrations\201406172057066_123456.Designer.cs">
+      <DependentUpon>201406172057066_123456.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201406172115531_abcdefghi.cs" />
+    <Compile Include="Migrations\201406172115531_abcdefghi.Designer.cs">
+      <DependentUpon>201406172115531_abcdefghi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Address.cs" />
@@ -559,11 +563,6 @@
     <Content Include="Views\Address\Details.cshtml" />
     <Content Include="Views\Address\Edit.cshtml" />
     <Content Include="Views\Address\Index.cshtml" />
-    <Content Include="Views\Request2\Create.cshtml" />
-    <Content Include="Views\Request2\Delete.cshtml" />
-    <Content Include="Views\Request2\Details.cshtml" />
-    <Content Include="Views\Request2\Edit.cshtml" />
-    <Content Include="Views\Request2\Index.cshtml" />
     <Content Include="Views\Request\IndexSup.cshtml" />
     <Content Include="Views\Request\IndexMyReq.cshtml" />
     <Content Include="Views\Request\Index.cshtml" />
@@ -586,6 +585,7 @@
     <Content Include="Views\Transport\Edit.cshtml" />
     <Content Include="Views\Transport\Index.cshtml" />
     <Content Include="Views\Request\_Details.cshtml" />
+    <Content Include="Views\Request\IndexAll.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -672,9 +672,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405010945501_12345.resx">
       <DependentUpon>201405010945501_12345.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405011008012_123456.resx">
-      <DependentUpon>201405011008012_123456.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201405011010191_1234567.resx">
       <DependentUpon>201405011010191_1234567.cs</DependentUpon>
@@ -816,6 +813,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201406131903314_m11111111.resx">
       <DependentUpon>201406131903314_m11111111.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406172057066_123456.resx">
+      <DependentUpon>201406172057066_123456.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201406172115531_abcdefghi.resx">
+      <DependentUpon>201406172115531_abcdefghi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

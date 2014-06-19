@@ -7,7 +7,6 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Request</h4>
     @{  var image = Model.Status.StatusName;
     }
     <div style="padding:10px;">
@@ -75,7 +74,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Status.StatusName)
+            Status
         </dt>
 
         <dd>
@@ -138,6 +137,7 @@
         }
     </dl>
 </div>
+<hr/>
 <p>
     @if (!(Model.Status.StatusName.Equals("New")) && 
          !(Model.Status.StatusName.Equals("Closed")) &&

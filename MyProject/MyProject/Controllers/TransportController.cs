@@ -62,15 +62,15 @@ namespace MyProject.Controllers
             if (ModelState.IsValid)
             {
                 EmployeeDAL ed = new EmployeeDAL();
-                var drv = ed.getEmployeeById(Convert.ToInt32(driver));
+                var drv = ed.GetEmployeeById(Convert.ToInt32(driver));
                 if (drv != null)
                     transport.Driver = drv;
 
-                var trans = ed.getTransportCompanyById(Convert.ToInt32(transcomp));//transport.TransportCompId);
+                var trans = ed.GetTransportCompanyById(Convert.ToInt32(transcomp));//transport.TransportCompId);
                 if (trans != null)
                     transport.TransportComp = trans;
 
-                ed.addTransportAndSaveChanges(transport);
+                ed.AddTransportAndSaveChanges(transport);
                
                 string path = Path.Combine (AppDomain.CurrentDomain.BaseDirectory, "Tickets");
                 string ticketPath = null;
@@ -89,7 +89,7 @@ namespace MyProject.Controllers
                     //salvam calea catre pdf in baza de date
                     transport.PlaneTicketPath = filePath;
                     //salvam modificarile
-                    ed.saveChanges();
+                    ed.SaveChanges();
                     Session["tId"] = transport.TransportId;
                     
                 }
@@ -148,15 +148,15 @@ namespace MyProject.Controllers
                         //transcomp
                         EmployeeDAL ed = new EmployeeDAL();
 
-                        var drv = ed.getEmployeeById(transport.DriverId);
+                        var drv = ed.GetEmployeeById(transport.DriverId);
                         if (drv != null)
                             transport.Driver = drv;
 
-                        var tr = ed.getTransportCompanyById(transport.TransportCompId);
+                        var tr = ed.GetTransportCompanyById(transport.TransportCompId);
                         if (tr != null)
                             transport.TransportComp = tr;
                         
-                        ed.saveChanges();
+                        ed.SaveChanges();
                         //db.SaveChanges();
                         trans.Commit();
                     }

@@ -15,7 +15,6 @@ namespace MyUnitTestProject
         [TestMethod]
         public void TestAspNetUserOk()
         {
-
             var empController = new EmployeeController();
             
             var emp = new Employee();

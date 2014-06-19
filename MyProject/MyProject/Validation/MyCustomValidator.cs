@@ -18,6 +18,11 @@ namespace MyProject.Validation
                     var errormessage = "Hire Date can't be in the future.";
                     return new ValidationResult(errormessage);
                 }
+                if (hiredate < DateTime.Now.AddHours(-1))
+                {
+                    var errormessage = "Hire Date can't be in the past.";
+                    return new ValidationResult(errormessage);
+                }
             }
             return ValidationResult.Success;
         }

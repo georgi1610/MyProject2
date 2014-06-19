@@ -4,17 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>My Requests</h2>
 
 
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Status.StatusName)
-        </th>
-        <th>
-            Applicant
+            Status
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Delegation.DelegationType)
@@ -35,10 +32,25 @@
     
     <tr>
         <td>
+            @if (item.Status.StatusName.Equals("New"))
+            {
+                <img src="../images/new.jpg" />
+            }
+            @if (item.Status.StatusName.Equals("Approved"))
+            {
+                <img src="../images/active.jpg" />
+            }
+            @if (item.Status.StatusName.Equals("Closed (Denied)") || 
+                 item.Status.StatusName.Equals("Denied"))
+            {
+                <img src="../images/deactivated.jpg" />
+            }
+            @if (item.Status.StatusName.Equals("Closed"))
+            {
+                <img src="../images/closed_approved.jpg" />      
+            }
+
             @Html.DisplayFor(modelItem => item.Status.StatusName)
-        </td>
-        <td>
-            @Html.DisplayFor(model => item.Applicant.FullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Delegation.DelegationType)

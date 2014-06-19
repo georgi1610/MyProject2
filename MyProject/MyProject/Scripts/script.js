@@ -2,7 +2,7 @@
 	 
 	    $("a.topopup").click(function() {
 	            loading(); // loading
-	            setTimeout(function(){ // then show popup, deley in .5 second
+	            setTimeout(function(){ // then show popup, delay in .5 second
 	                loadPopup(); // function show popup
 	            }, 500); // .5 second
 	    return false;

@@ -61,7 +61,7 @@ namespace MyProject.DAL
 
         }
 
-        public void sendEmail(Employee dest, Employee sender, string subject, string body)
+        public int sendEmail(Employee dest, Employee sender, string subject, string body)
         {
             try
             {
@@ -80,36 +80,46 @@ namespace MyProject.DAL
                 (userName, sender.EMailPassword);// Enter senders User name and password
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
+                return 0;
             }
             catch(Exception e)
             {
                 //send email failed
+                return -1;
             }
         }
 
         private ApplicationDbContext db = new ApplicationDbContext();
-/*
-        public string getEmployeeIdByLoggedUser(AspNetUsers loggedUser)
+
+        public int GetEmployeeIdByLoggedUser(string loggedUserName)
         {
             var id = (from u in db.Users
-                      where u.UserName.Equals(loggedUser.Name)
-                      select u.EmployeeId).First();//iau id-ul angajatului cu nume user = loggedUser.Name
-            return id.ToString();
+                      where u.UserName.Equals(loggedUserName)
+                      select u.EmployeeId).First();
+            return Convert.ToInt32(id);
+       }
+
+        public List<Request> GetRequestsListByEmployeeId(Int32 employeeId)
+        {
+            var req = (from r in db.MyRequest
+                       where r.Applicant.EmployeeId == employeeId
+                       select r).ToList();
+            return req;
         }
-*/
-        public string getStatusNameById(int id)
+
+        public string GetStatusNameById(int id)
         {
             string s = (from st in db.MyStatus
                         where st.StatusId.Equals(id)
                         select st.StatusName).First().ToString();
             return s;
         }
-        public Employee getEmployeeById(int id)
+        public Employee GetEmployeeById(int id)
         {
             var emp = db.MyEmployee.Find(Convert.ToInt32(id));//obtin obiectul employee cu id-ul obtinut mai sus
             return emp;            
         }
-        public void createUserAndAddToRole(Employee employee)
+        public void CreateUserAndAddToRole(Employee employee)
         {
             //create user for employee
             var user = new ApplicationUser();
@@ -118,60 +128,60 @@ namespace MyProject.DAL
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             var adminresult = UserManager.Create(user, "password");
             //db.SaveChanges();
-            saveChanges();
+            SaveChanges();
 
             //Add User to Role 'Employee'
             if (adminresult.Succeeded)
             {
                 var result = UserManager.AddToRole(user.Id, "Employee");
                 //db.SaveChanges();
-                saveChanges();
+                SaveChanges();
             }
         }
-        public Employee getHREmployee(string dep)
+        public Employee GetHREmployee(string dep)
         {
             var hr = (from p in db.MyEmployee
                       where p.Department.Equals(dep)
                       select p).First();
             return hr;
         }
-        public Address getAddressById(int id)
+        public Address GetAddressById(int id)
         {
             var dep = (from d in db.MyAddress
                        where d.AddressId.Equals(id)
                        select d).First();
             return dep;
         }
-        public Employee getStandInEmployeeById(int id)
+        public Employee GetStandInEmployeeById(int id)
         {
             var stdin = (from e in db.MyEmployee
                          where e.EmployeeId == id
                          select e).First();
             return stdin;
         }
-        public TransportCompany getTransportCompanyById(int id)
+        public TransportCompany GetTransportCompanyById(int id)
         {
             var trans = (from t in db.TransportCompanies
                          where t.TransportCompanyId == id
                          select t).First();
             return trans;
         }
-        public void addRequestAndSaveChanges(Request request)
+        public void AddRequestAndSaveChanges(Request request)
         {
             db.MyRequest.Add(request);
             db.SaveChanges();
         }
-        public void addTransportAndSaveChanges(Transport transport)
+        public void AddTransportAndSaveChanges(Transport transport)
         {
             db.MyTransport.Add(transport);
             db.SaveChanges();
         }
-        public void addEmployeeAndSaveChanges(Employee employee)
+        public void AddEmployeeAndSaveChanges(Employee employee)
         {
             db.MyEmployee.Add(employee);
             db.SaveChanges();
         }
-        public void saveChanges()
+        public void SaveChanges()
         {
             db.SaveChanges();
         }

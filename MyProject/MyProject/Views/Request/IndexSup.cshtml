@@ -78,7 +78,7 @@
     });
 </script>
 
-<h2>Index</h2>
+<h2>Requests</h2>
 
 <table class="table">
     <tr>
@@ -103,6 +103,23 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @if (item.Status.StatusName.Equals("New"))
+            {
+                <img src="../images/new.jpg" />
+            }
+            @if (item.Status.StatusName.Equals("Approved"))
+            {
+                <img src="../images/active.jpg" />
+            }
+            @if (item.Status.StatusName.Equals("Closed (Denied)") || 
+                 item.Status.StatusName.Equals("Denied"))
+            {
+                <img src="../images/deactivated.jpg" />
+            }
+            @if (item.Status.StatusName.Equals("Closed"))
+            {
+                <img src="../images/closed_approved.jpg" />      
+            }
             @Html.DisplayFor(modelItem => item.Status.StatusName)
         </td>
         <td>
@@ -134,7 +151,7 @@
 }
 
 </table>
-
+<hr/>
 <div>
-    @Html.ActionLink("Back", "../Request")
+    @Html.ActionLink("Back to main page", "../Request")
 </div>

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<MyProject.Models.Request>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>All Requests</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Status
+        </th>
+        <th>
+            Applicant
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Delegation.DelegationType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartureDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReturnDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>
+                @if (item.Status.StatusName.Equals("New"))
+            {
+                <img src="../images/new.jpg" />
+            }
+            @if (item.Status.StatusName.Equals("Approved"))
+            {
+                <img src="../images/active.jpg" />
+            }
+            @if (item.Status.StatusName.Equals("Closed (Denied)") || 
+                 item.Status.StatusName.Equals("Denied"))
+            {
+                <img src="../images/deactivated.jpg" />
+            }
+            @if (item.Status.StatusName.Equals("Closed"))
+            {
+                <img src="../images/closed_approved.jpg" />      
+            }
+
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Applicant.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Delegation.DelegationType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartureDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            @{  var status = item.Status.StatusName;
+            }
+
+            @if (status == "New")
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.RequestId })
+                    <!--Html.ActionLink("Delete", "Delete", new { id = item.RequestId })-->
+                </td>
+            }
+            @if (status != "New")
+            {
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.RequestId })
+                </td>
+            }
+
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.ActionLink("Back", "../Request") |
+    @Html.ActionLink("New request", "../Request/Create")
+</div>
+
+
